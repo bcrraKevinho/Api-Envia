@@ -1,200 +1,325 @@
+<%- include('helper.ejs'); %>
 <%- include('header.ejs'); %>
-<div class="row">
-  <div class="col-md-4 order-md-2 mb-4">
-    <h4 class="d-flex justify-content-between align-items-center mb-3">
-      <span class="text-muted">Your cart</span>
-      <span class="badge badge-secondary badge-pill">3</span>
-    </h4>
-    <ul class="list-group mb-3">
-      <li class="list-group-item d-flex justify-content-between lh-condensed">
-        <div>
-          <h6 class="my-0">Product name</h6>
-          <small class="text-muted">Brief description</small>
-        </div>
-        <span class="text-muted">$12</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between lh-condensed">
-        <div>
-          <h6 class="my-0">Second product</h6>
-          <small class="text-muted">Brief description</small>
-        </div>
-        <span class="text-muted">$8</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between lh-condensed">
-        <div>
-          <h6 class="my-0">Third item</h6>
-          <small class="text-muted">Brief description</small>
-        </div>
-        <span class="text-muted">$5</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between bg-light">
-        <div class="text-success">
-          <h6 class="my-0">Promo code</h6>
-          <small>EXAMPLECODE</small>
-        </div>
-        <span class="text-success">-$5</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between">
-        <span>Total (USD)</span>
-        <strong>$20</strong>
-      </li>
-    </ul>
+<%- modal %> 
 
-    <form class="card p-2">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Promo code">
-        <div class="input-group-append">
-          <button type="submit" class="btn btn-secondary">Redeem</button>
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="col-md-8 order-md-1">
-    <h4 class="mb-3">Billing address</h4>
-    <form class="needs-validation" novalidate>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="firstName">First name</label>
-          <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            Valid first name is required.
+  <form action="create" method="post" >
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-<%- color %> text-white text-center">
+            <h4 class="card-title">Dirección de Origen</h4>
           </div>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="lastName">Last name</label>
-          <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-          <div class="invalid-feedback">
-            Valid last name is required.
-          </div>
-        </div>
-      </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nombreOrigen" >Nombre<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="nombreOrigen" name="nombreOrigen" placeholder="" 
+                value="<%- printValue("nombreOrigen")%>" <%- disabled %> required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="empresaOrigen">Empresa</label>
+                <input type="text" class="form-control" name="empresaOrigen" id="empresaOrigen" placeholder="" 
+                value="<%- printValue("empresaOrigen")%>" <%- disabled %> >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="emailOrigen">Email</label>
+                <input type="text" class="form-control" id="emailOrigen" name="emailOrigen" placeholder="" 
+                value="<%- printValue("emailOrigen")%>" <%- disabled %> >
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="telefonoOrigen">Teléfono<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="telefonoOrigen" name="telefonoOrigen" placeholder="" 
+                value="<%- printValue("telefonoOrigen")%>" <%- disabled %> required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="paisOrigen">Pais<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="paisOrigen" name="paisOrigen" placeholder="" 
+                value="<%- printValue("paisOrigen")%>" <%- disabled %> required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="calleOrigen">Calle<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="calleOrigen" name="calleOrigen" placeholder=""
+                value="<%- printValue("calleOrigen")%>" <%- disabled %> required>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 mb-3">
+                <label for="numeroOrigen">Número</label>
+                <input type="text" class="form-control" id="numeroOrigen" name="numeroOrigen" placeholder=""
+                value="<%- printValue("numeroOrigen")%>" <%- disabled %> >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cpOrigen">Codigo Postal<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="cpOrigen" name="cpOrigen" placeholder="" 
+                value="<%- printValue("cpOrigen")%>" <%- disabled %> required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="coloniaOrigen">Colonia</label>
+                <input type="text" class="form-control" id="coloniaOrigen" name="coloniaOrigen" placeholder="" 
+                value="<%- printValue("coloniaOrigen")%>" <%- disabled %> >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="ciudadOrigen">Ciudad<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="ciudadOrigen" name="ciudadOrigen" placeholder="" 
+                value="<%- printValue("ciudadOrigen")%>" <%- disabled %> required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="estadoOrigen">Estado<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="estadoOrigen" name="estadoOrigen" placeholder="" 
+                value="<%- printValue("estadoOrigen")%>" <%- disabled %> required>
+              </div>
+            </div>
 
-      <div class="mb-3">
-        <label for="username">Username</label>
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">@</span>
-          </div>
-          <input type="text" class="form-control" id="username" placeholder="Username" required>
-          <div class="invalid-feedback" style="width: 100%;">
-            Your username is required.
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="rfcOrigen">RFC</label>
+                <input type="text" class="form-control" id="rfcOrigen" name="rfcOrigen" placeholder="" 
+                value="<%- printValue("rfcOrigen")%>" <%- disabled %> >
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="referenciaOrigen">Referencia</label>
+                <input type="text" class="form-control" id="referenciaOrigen" name="referenciaOrigen" placeholder="" 
+                value="<%- printValue("referenciaOrigen")%>" <%- disabled %>>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-<%- color %> text-white text-center">
+            <h4 class="card-title">Destino</h4>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="nombreDestino">Nombre<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="nombreDestino" name="nombreDestino" placeholder="" 
+                  value="<%- printValue("nombreDestino")%>" <%- disabled %> required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="empresaDestino">Empresa</label>
+                  <input type="text" class="form-control" id="empresaDestino" name="empresaDestino" placeholder="" 
+                  value="<%- printValue("empresaDestino")%>" <%- disabled %> >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="emailDestino">Email</label>
+                  <input type="text" class="form-control" id="emailDestino" name="emailDestino" placeholder="" 
+                  value="<%- printValue("emailDestino")%>" <%- disabled %> >
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="telefonoDestino">Teléfono<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="telefonoDestino" name="telefonoDestino" placeholder="" 
+                  value="<%- printValue("telefonoDestino")%>" <%- disabled %> required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="paisDestino">Pais<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="paisDestino" name="paisDestino" placeholder="" 
+                  value="<%- printValue("paisDestino")%>" <%- disabled %> required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="calleDestino">Calle<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="calleDestino" name="calleDestino" placeholder="" 
+                  value="<%- printValue("calleDestino")%>" <%- disabled %> required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="numeroDestino">Número</label>
+                  <input type="text" class="form-control" id="numeroDestino" name="numeroDestino" placeholder="" 
+                  value="<%- printValue("numeroDestino")%>" <%- disabled %> >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="cpDestino">Codigo Postal<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="cpDestino" name="cpDestino" placeholder="" 
+                  value="<%- printValue("cpDestino")%>" <%- disabled %> required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="coloniaDestino">Colonia</label>
+                  <input type="text" class="form-control" id="coloniaDestino" name="coloniaDestino" placeholder="" 
+                  value="<%- printValue("coloniaDestino")%>" <%- disabled %> >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="ciudadDestino">Ciudad<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="ciudadDestino" name="ciudadDestino" placeholder="" 
+                  value="<%- printValue("ciudadDestino")%>" <%- disabled %> required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="estadoDestino">Estado<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="estadoDestino" name="estadoDestino" placeholder="" 
+                  value="<%- printValue("estadoDestino")%>" <%- disabled %> required>
+                </div>
+              </div>
 
-      <div class="mb-3">
-        <label for="email">Email <span class="text-muted">(Optional)</span></label>
-        <input type="email" class="form-control" id="email" placeholder="you@example.com">
-        <div class="invalid-feedback">
-          Please enter a valid email address for shipping updates.
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="rfcDestino">RFC</label>
+                  <input type="text" class="form-control" id="rfcDestino" name="rfcDestino" placeholder="" 
+                  value="<%- printValue("rfcDestino")%>" <%- disabled %> >
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="referenciaDestino">Referencia</label>
+                  <input type="text" class="form-control" id="referenciaDestino" name="referenciaDestino" placeholder="" 
+                  value="<%- printValue("referenciaDestino")%>" <%- disabled %> >
+                </div>
+              </div>
+          </div>
         </div>
       </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header bg-<%- color %> text-white text-center">
+            <h4 class="card-title">Paquete</h4>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <input type="radio" class="btn-check" name="tipo" id="btnSobre" autocomplete="off" value="envelope" required>
+                  <label class="btn btn-outline-primary" for="btnSobre">Sobre</label>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <input type="radio" class="btn-check" name="tipo" id="btnCaja" autocomplete="off" value="box" required>
+                  <label class="btn btn-outline-primary" for="btnCaja">caja</label>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <input type="radio" class="btn-check" name="tipo" id="btnTarima" autocomplete="off" value="pallet" required>
+                  <label class="btn btn-outline-primary" for="btnTarima">tarima</label>
+                </div>
+                <div class="col-md-3 mb-3">
+                  <input type="radio" class="btn-check" name="tipo" id="btnCamion" autocomplete="off" value="full_truck_load" required>
+                  <label class="btn btn-outline-primary" for="btnCamion">camión</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="contenido">Contenido<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="contenido" name="contenido" placeholder=""
+                  value="<%- printValue("contenido")%>" <%- disabled %> required>
+                </div>
+                
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="valor">Valor declarado</label>
+                  <input type="text" class="form-control" id="valor" name="valor" placeholder="" 
+                  value="<%- printValue("valor")%>" <%- disabled %> >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="cantidad">Cantidad de paquetes</label>
+                  <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="" min="1"
+                  value="<%- printValue("cantidad")%>" <%- disabled %> >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 mb-3">
+                  <label for="largo">Largo<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="largo" name="largo" placeholder="" 
+                  value="<%- printValue("largo")%>" <%- disabled %> required>
+                </div>
+              </div>
 
-      <div class="mb-3">
-        <label for="address">Address</label>
-        <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-        <div class="invalid-feedback">
-          Please enter your shipping address.
-        </div>
-      </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="ancho">Ancho<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="ancho" name="ancho" placeholder="" 
+                  value="<%- printValue("ancho")%>" <%- disabled %> required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="altura">Altura<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="alto" name="alto" placeholder="" 
+                  value="<%- printValue("alto")%>" <%- disabled %> required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="peso">Peso<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="peso" name="peso" placeholder="" 
+                  value="<%- printValue("peso")%>" <%- disabled %> required>
+                </div>
+              </div>
 
-      <div class="mb-3">
-        <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-        <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-      </div>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label for="servicios">Seguro</label>
+                  <input type="text" class="form-control" id="seguro" name="seguro" placeholder="" 
+                  value="<%- printValue("seguro")%>" <%- disabled %> >
 
-      <div class="row">
-        <div class="col-md-5 mb-3">
-          <label for="country">Country</label>
-          <select class="custom-select d-block w-100" id="country" required>
-            <option value="">Choose...</option>
-            <option>United States</option>
-          </select>
-          <div class="invalid-feedback">
-            Please select a valid country.
-          </div>
-        </div>
-        <div class="col-md-4 mb-3">
-          <label for="state">State</label>
-          <select class="custom-select d-block w-100" id="state" required>
-            <option value="">Choose...</option>
-            <option>California</option>
-          </select>
-          <div class="invalid-feedback">
-            Please provide a valid state.
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label for="zip">Zip</label>
-          <input type="text" class="form-control" id="zip" placeholder="" required>
-          <div class="invalid-feedback">
-            Zip code required.
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="firma">Firma electrónica</label>
+                  <input type="text" class="form-control" id="firma" name="firma" placeholder="" 
+                  value="<%- printValue("firma")%>" <%- disabled %> >
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label for="peligroso">Considerado Peligroso</label>
+                  <input type="text" class="form-control" id="peligroso" name="peligroso" placeholder="" 
+                  value="<%- printValue("peligroso")%>" <%- disabled %> >
+                </div>
+              </div>
           </div>
         </div>
       </div>
-      <hr class="mb-4">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="same-address">
-        <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <hr class="mb-4">
+        <button class="btn btn-<%- color %> btn-lg btn-block" <%- disabled %> type="submit">Crear envío</button>
       </div>
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="save-info">
-        <label class="custom-control-label" for="save-info">Save this information for next time</label>
-      </div>
-      <hr class="mb-4">
+    </div>
+  </form>
 
-      <h4 class="mb-3">Payment</h4>
 
-      <div class="d-block my-3">
-        <div class="custom-control custom-radio">
-          <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
-          <label class="custom-control-label" for="credit">Credit card</label>
-        </div>
-        <div class="custom-control custom-radio">
-          <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
-          <label class="custom-control-label" for="debit">Debit card</label>
-        </div>
-        <div class="custom-control custom-radio">
-          <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
-          <label class="custom-control-label" for="paypal">PayPal</label>
-        </div>
+  <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¡Envio creado con éxito!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label for="cc-name">Name on card</label>
-          <input type="text" class="form-control" id="cc-name" placeholder="" required>
-          <small class="text-muted">Full name as displayed on card</small>
-          <div class="invalid-feedback">
-            Name on card is required
-          </div>
-        </div>
-        <div class="col-md-6 mb-3">
-          <label for="cc-number">Credit card number</label>
-          <input type="text" class="form-control" id="cc-number" placeholder="" required>
-          <div class="invalid-feedback">
-            Credit card number is required
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12 mb-4">
+            <ul class="list-group mb-3">
+              <li class="list-group-item active d-flex justify-content-between lh-condensed">
+                <div>
+                  <h5 class="my-0">Información de envío</h5>
+                </div>
+              </li>
+              <% if(typeof res !== 'undefined') {%>
+              <%- printObject([res[0]]) %>
+              <% } %>
+
+            </ul>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-3 mb-3">
-          <label for="cc-expiration">Expiration</label>
-          <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-          <div class="invalid-feedback">
-            Expiration date required
-          </div>
-        </div>
-        <div class="col-md-3 mb-3">
-          <label for="cc-cvv">CVV</label>
-          <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-          <div class="invalid-feedback">
-            Security code required
-          </div>
-        </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
-      <hr class="mb-4">
-      <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
-    </form>
+    </div>
   </div>
 </div>
-<%- include('footer.ejs'); %>
+  <%- include('footer.ejs'); %>

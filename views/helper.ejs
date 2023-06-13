@@ -1,0 +1,38 @@
+<% 
+
+printObject = function(obj){
+    var openList = '<li class="list-group-item d-flex justify-content-between lh-condensed"><div><h6 class="my-0">';
+    var middleList = '</h6><small class="text-muted">';
+    var closeList = '</small></div></li>' 
+    var List = '';
+    obj.forEach(result => {
+        Object.keys(result).forEach(key => {
+        if(result[key]) {
+            if(typeof result[key] !== 'object'){
+                List += openList + result[key] + middleList + key + closeList;
+            }
+            else{
+                printObject([result[key]]);
+            }
+        }})
+    })
+    return List;
+}
+printValue = function(field){
+    if(typeof req !== 'undefined') {
+        if(field in req){
+            console.log(req[field]);
+            return req[field];
+        }
+    }
+    return "";
+}
+
+//Logic
+if(typeof disabled === 'undefined') {
+    disabled = "";
+}
+if(typeof modal === 'undefined') {
+    modal = "";
+}
+%>

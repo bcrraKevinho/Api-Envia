@@ -1,18 +1,886 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>MVC</title>
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-</head>
-<body><!-- Just an image -->
-    <nav class="navbar navbar-light bg-light">
-      <a class="navbar-brand" href="#">
-        <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="">
-      </a>
-    </nav>
-    <h2>INDEX</h2>
+<%- include('header.ejs'); %>
+<div class="position-relative container-fluid">
+  <div class="d-none mb-3 py-3 box-wizard bg-white shadow-sm">
+      <div class="w-100 d-flex justify-content-around">
+          <div class="w-100 text-center">
+              <div class="d-flex justify-content-center">
+
+
+
+              </div><span class="text-primary">Origen</span>
+          </div>
+          <div class="w-100 text-center">
+              <div class="d-flex justify-content-center">
+                  <div class="position-relative align-self-center unions visited"></div>
+                  <div class="circle text-decoration-none"><i class="fas fa-map-marker-alt text-gray"></i></div>
+                  <div class="position-relative align-self-center unions visited"></div>
+              </div><span class="text-muted text-gray">Destino</span>
+          </div>
+          <div class="w-100 text-center">
+              <div class="d-flex justify-content-center">
+                  <div class="position-relative align-self-center unions visited"></div>
+                  <div class="circle text-decoration-none"><i class="fas fa-boxes text-gray"></i></div>
+                  <div class="position-relative align-self-center unions"></div>
+              </div><span class="text-muted text-gray">Paquetes</span>
+          </div>
+      </div>
+  </div>
+  <div class="gy-4 gx-3 justify-content-center row">
+      <div name="origin" id="origin" class="col--location-form col-xl-4 col-lg-10 col-md-12 col-sm-12 col-12">
+          <div class="location--card card">
+              <div class="px-3 py-2 card-header">
+                  <div class="row">
+                      <div class="d-flex col">
+                          <h5 class="m-0 align-self-center">Dirección de Origen</h5>
+                      </div>
+                      <div class="d-flex justify-content-end col-md-auto col-auto"><button type="button"
+                              class="fw-bold text-decoration-none align-self-center btn btn-link">+ Nuevo
+                          </button></div>
+                  </div>
+              </div>
+              <div class="pt-2 card-body">
+                  <div class="">
+                      <div></div>
+                  </div>
+                  <div id="generate-form-origin" class="">
+                      <form action="#" autocomplete="off">
+                          <div class="gx-2 row">
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="origin_name">Nombre <span
+                                              class="text-danger">*</span></label><input name="name"
+                                          id="origin_name" class="form-control is-valid" value="Kevinbecerra">
+                                  </div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="origin_company">Empresa
+                                      </label><input name="company" id="origin_company"
+                                          class="form-control is-valid" value="Soltek(prueba)"></div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="origin_email">Email
+                                      </label><input name="email" id="origin_email" class="form-control is-valid"
+                                          value="kevin@gruposoltek.com"></div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="origin_phone">Teléfono <span
+                                              class="text-danger">*</span></label>
+                                      <div>
+                                          <div class="input-group"><input inputmode="numeric" type="number"
+                                                  id="origin_phone" class="form-control is-valid"
+                                                  value="6461131415"></div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12">
+                                  <div class="mb-2"><label class="form-label" for="origin_country">País <span
+                                              class="text-danger">*</span></label>
+                                      <div id="origin_country" data-name="" class="dropdown"><button type="button"
+                                              class="form-select text-start text-truncate is-valid"
+                                              style="text-overflow: ellipsis;">
+                                              <div class="d-flex align-items-center"><img width="20" height="20"
+                                                      class="border shadow-sm rounded me-2" src="/flags/mx.svg"
+                                                      alt="MX">México</div>
+                                          </button>
+                                          <div x-placement="bottom-start" class="w-100 dropdown-menu"
+                                              aria-labelledby="" data-popper-reference-hidden="false"
+                                              data-popper-escaped="false" data-popper-placement="bottom-start"
+                                              style="inset: 0px auto auto 0px; transform: translate3d(294.4px, 353.6px, 0px);">
+                                              <div></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12">
+                                  <div class="mb-2"><label class="w-100 form-label">Calle <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container">
+                                          <div class="position-relative m-0 p-0 d-flex align-items-center w-100">
+                                              <input name="street" defaultcoords="[object Object]"
+                                                  countrycode="MX" id="origin_street" class="form-control"
+                                                  value="" style="background: none;"><i
+                                                  class="position-absolute fas fa-crosshairs pe-3 p-2 text-muted"
+                                                  style="right: 0px;"></i></div><i
+                                              class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12">
+                                  <div class="mb-2"><label class="w-100 form-label">Número </label>
+                                      <div class="input-container"><input name="number" id="origin_number"
+                                              class="form-control" value=""><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Código postal <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container"><input name="postal_code"
+                                              id="origin_postal_code" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Colonia </label>
+                                      <div class="input-container"><input name="district" id="origin_district"
+                                              class="form-control" value=""><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 d-none">
+                                  <div class="mb-2"><label class="w-100 form-label">Colonia </label>
+                                      <div class="input-container"><input name="district_select"
+                                              id="origin_district_select" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Ciudad <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container"><input name="city" id="origin_city"
+                                              class="form-control" value=""><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 d-none">
+                                  <div class="mb-2"><label class="w-100 form-label">Ciudad </label>
+                                      <div class="input-container"><input name="city_select"
+                                              id="origin_city_select" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Estado <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container">
+                                          <div id="origin_state" data-name="state" class="dropdown"><button
+                                                  type="button" class="form-select text-start text-truncate"
+                                                  style="text-overflow: ellipsis;">Seleccione una opción</button>
+                                              <div x-placement="bottom-start" class="w-100 dropdown-menu"
+                                                  aria-labelledby="" data-popper-reference-hidden="false"
+                                                  data-popper-escaped="false" data-popper-placement="bottom-start"
+                                                  style="inset: 0px auto auto 0px; transform: translate3d(482.4px, 594.4px, 0px);">
+                                                  <div></div>
+                                              </div>
+                                          </div><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">RFC </label>
+                                      <div class="input-container"><input name="identification_number"
+                                              id="origin_identification_number" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Referencia </label>
+                                      <div class="input-container"><input name="reference" id="origin_reference"
+                                              class="form-control" value=""><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="mt-3 d-none row">
+                              <div class="mb-3 col-sm-12"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-12"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-12"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="mt-2 d-flex justify-content-between align-items-start">
+                      <div></div>
+                      <div class="d-flex justify-content-end">
+                          <div class="d-flex w-100 justify-content-between align-items-center"><button
+                                  type="submit" class="ms-3 btn btn-primary">Guardar </button></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div name="destination" id="destination"
+          class="col--location-form col-xl-4 col-lg-10 col-md-12 col-sm-12 col-12">
+          <div class="location--card card">
+              <div class="px-3 py-2 card-header">
+                  <div class="row">
+                      <div class="d-flex col">
+                          <h5 class="m-0 align-self-center">Dirección de Destino</h5>
+                      </div>
+                      <div class="d-flex justify-content-end col-md-auto col-auto"><button type="button"
+                              class="fw-bold text-decoration-none align-self-center btn btn-link">+ Nuevo
+                          </button></div>
+                  </div>
+              </div>
+              <div class="pt-2 card-body">
+                  <div class="">
+                      <div></div>
+                  </div>
+                  <div id="generate-form-destination" class="">
+                      <form action="#" autocomplete="off">
+                          <div class="gx-2 row">
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="destination_name">Nombre <span
+                                              class="text-danger">*</span></label><input name="name"
+                                          id="destination_name" class="form-control" value=""></div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="destination_company">Empresa
+                                      </label><input name="company" id="destination_company" class="form-control"
+                                          value=""></div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="destination_email">Email
+                                      </label><input name="email" id="destination_email" class="form-control"
+                                          value=""></div>
+                              </div>
+                              <div class="col-6">
+                                  <div class="mb-2"><label class="form-label" for="destination_phone">Teléfono
+                                          <span class="text-danger">*</span></label>
+                                      <div>
+                                          <div class="input-group"><input inputmode="numeric" type="number"
+                                                  id="destination_phone" class="form-control" value=""></div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12">
+                                  <div class="mb-2"><label class="form-label" for="destination_country">País <span
+                                              class="text-danger">*</span></label>
+                                      <div id="destination_country" data-name="" class="dropdown"><button
+                                              type="button" class="form-select text-start text-truncate is-valid"
+                                              style="text-overflow: ellipsis;">
+                                              <div class="d-flex align-items-center"><img width="20" height="20"
+                                                      class="border shadow-sm rounded me-2" src="/flags/mx.svg"
+                                                      alt="MX">México</div>
+                                          </button>
+                                          <div x-placement="bottom-start" class="w-100 dropdown-menu"
+                                              aria-labelledby="" data-popper-reference-hidden="false"
+                                              data-popper-escaped="false" data-popper-placement="bottom-start"
+                                              style="inset: 0px auto auto 0px; transform: translate3d(707.2px, 353.6px, 0px);">
+                                              <div></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12">
+                                  <div class="mb-2"><label class="w-100 form-label">Calle <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container">
+                                          <div class="position-relative m-0 p-0 d-flex align-items-center w-100">
+                                              <input name="street" defaultcoords="[object Object]"
+                                                  countrycode="MX" id="destination_street" class="form-control"
+                                                  value="" style="background: none;"><i
+                                                  class="position-absolute fas fa-crosshairs pe-3 p-2 text-muted"
+                                                  style="right: 0px;"></i></div><i
+                                              class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12">
+                                  <div class="mb-2"><label class="w-100 form-label">Número </label>
+                                      <div class="input-container"><input name="number" id="destination_number"
+                                              class="form-control" value=""><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Código postal <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container"><input name="postal_code"
+                                              id="destination_postal_code" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Colonia </label>
+                                      <div class="input-container"><input name="district"
+                                              id="destination_district" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 d-none">
+                                  <div class="mb-2"><label class="w-100 form-label">Colonia </label>
+                                      <div class="input-container"><input name="district_select"
+                                              id="destination_district_select" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Ciudad <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container"><input name="city" id="destination_city"
+                                              class="form-control" value=""><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6 d-none">
+                                  <div class="mb-2"><label class="w-100 form-label">Ciudad </label>
+                                      <div class="input-container"><input name="city_select"
+                                              id="destination_city_select" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Estado <span
+                                              class="text-danger">*</span></label>
+                                      <div class="input-container">
+                                          <div id="destination_state" data-name="state" class="dropdown"><button
+                                                  type="button" class="form-select text-start text-truncate"
+                                                  style="text-overflow: ellipsis;">Seleccione una opción</button>
+                                              <div x-placement="bottom-start" class="w-100 dropdown-menu"
+                                                  aria-labelledby="" data-popper-reference-hidden="false"
+                                                  data-popper-escaped="false" data-popper-placement="bottom-start"
+                                                  style="inset: 0px auto auto 0px; transform: translate3d(893.6px, 594.4px, 0px);">
+                                                  <div></div>
+                                              </div>
+                                          </div><i class="fas fa-spinner fa-spin"></i>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">RFC </label>
+                                      <div class="input-container"><input name="identification_number"
+                                              id="destination_identification_number" class="form-control"
+                                              value=""><i class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="mb-2"><label class="w-100 form-label">Referencia </label>
+                                      <div class="input-container"><input name="reference"
+                                              id="destination_reference" class="form-control" value=""><i
+                                              class="fas fa-spinner fa-spin"></i></div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="mt-3 d-none row">
+                              <div class="mb-3 col-sm-12"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-12"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-6"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                              <div class="mb-3 col-sm-12"><span><span
+                                          class="react-loading-skeleton css-1q79kkk-skeletonStyles-Skeleton"
+                                          style="height: 33px;">‌</span></span></div>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="mt-2 d-flex justify-content-between align-items-start">
+                      <div></div>
+                      <div class="d-flex justify-content-end">
+                          <div class="d-flex w-100 justify-content-between align-items-center"><button
+                                  type="submit" class="ms-3 btn btn-primary">Guardar </button></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div id="packages" class="col-xl-4 col-lg-10 col-md-12 col-sm-12 col-12">
+          <div data-test="package.0" class="mb-3 card">
+              <div class="card-header">
+                  <div class="d-flex justify-content-between align-items-center">
+                      <div class="m-0 card-title h5">
+                          <div class="d-flex">Paquete #1 </div>
+                      </div>
+                      <div class="d-flex">
+                          <div role="group" class="dropdown btn-group"><button type="button"
+                                  class="btn btn-outline-primary">Editar </button></div><button type="button"
+                              class="ms-2 btn btn-outline-danger"><i class="fas fa-trash"></i> </button>
+                      </div>
+                  </div>
+              </div>
+              <div class="pt-2 card-body">
+                  <div class="m-0">
+                      <div class="mb-3">
+                          <div><label class="form-label">Paquetes guardados</label>
+                              <div id="" data-name="" class="dropdown"><button type="button"
+                                      class="form-select text-start text-truncate"
+                                      style="text-overflow: ellipsis;">Seleccione una opción</button>
+                                  <div x-placement="bottom-start" class="w-100 dropdown-menu" aria-labelledby=""
+                                      data-popper-reference-hidden="false" data-popper-escaped="false"
+                                      data-popper-placement="bottom-start"
+                                      style="inset: 0px auto auto 0px; transform: translate3d(1116px, 223.2px, 0px);">
+                                      <div></div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="mb-3">
+                          <fieldset class="mt-0 mb-0">
+                              <div class="w-100">
+                                  <div class="d-flex p-1 flex-row flex-nowrap overflow-auto"><button type="button"
+                                          data-test="envelope" class="me-2 d-inline btn btn-outline-primary"><i
+                                              class="mx-1 fas fa-envelope-open"></i>Sobre</button><button
+                                          type="button" data-test="box" class="me-2 d-inline btn btn-primary"><i
+                                              class="mx-1 fas fa-box-open"></i>Caja</button><button type="button"
+                                          data-test="pallet" class="me-2 d-inline btn btn-outline-primary"><i
+                                              class="mx-1 fas fa-pallet"></i>Tarima</button><button type="button"
+                                          data-test="full_truck_load"
+                                          class="me-2 d-inline btn btn-outline-primary"><i
+                                              class="mx-1 fas fa-truck"></i>Camión</button></div>
+                              </div>
+                          </fieldset>
+                      </div>
+                      <div class="">
+                          <form action="#" novalidate="" autocomplete="off">
+                              <div class="g-2 row">
+                                  <div class="col-md-9">
+                                      <div class=""><label class="d-flex text-truncate form-label">
+                                              <div class="d-flex">Contenido <span
+                                                      class="text-danger ms-1">*</span></div>
+                                          </label>
+                                          <div class="flex-nowrap"><input label="" autocomplete="off"
+                                                  placeholder="" list="autocompleteOff" data-test="content"
+                                                  id="YeWlyxuPhK" class="mw-100 position-relative form-control"
+                                                  value="">
+                                              <div class="position-relative w-100"></div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <fieldset class="mt-0">
+                                          <div><label class="form-label" for="units">Unidad</label>
+                                              <div width="100%" class="sc-gsTEea bWUSrN"><span
+                                                      class="rounded-toggle togglerounded"></span><input
+                                                      type="checkbox" name="toggle-button" class="pointer toggle"
+                                                      checked=""><span
+                                                      class="option option1 text-truncate">KG/CM</span><span
+                                                      class="option option2 text-truncate">LB/IN</span></div>
+                                          </div>
+                                      </fieldset>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class=""><label class="d-flex text-truncate form-label">
+                                              <div class="d-flex">Valor Declarado </div>
+                                          </label>
+                                          <div class="flex-nowrap input-group"><input placeholder=""
+                                                  data-test="declared_value" type="number" id="2kzlNnvFQI"
+                                                  class="form-control" value="0"><span
+                                                  class="input-group-text">MXN</span></div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <div class=""><label class="d-flex text-truncate form-label">
+                                              <div class="d-flex">Cantidad de paquetes </div>
+                                          </label>
+                                          <div class="flex-nowrap"><input placeholder="" data-test="amount"
+                                                  type="number" id="lCZhj3j9bq" class="form-control is-valid"
+                                                  value="1"></div>
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-xxl-3">
+                                      <div class=""><label class="d-flex text-truncate form-label">
+                                              <div class="d-flex">Largo <span class="text-danger ms-1">*</span>
+                                              </div>
+                                          </label>
+                                          <div class="flex-nowrap input-group"><input placeholder=""
+                                                  data-test="length" type="number" id="H0rWYR4PTV"
+                                                  class="form-control" value=""><span
+                                                  class="input-group-text">CM</span></div>
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-xxl-3">
+                                      <div class=""><label class="d-flex text-truncate form-label">
+                                              <div class="d-flex">Ancho <span class="text-danger ms-1">*</span>
+                                              </div>
+                                          </label>
+                                          <div class="flex-nowrap input-group"><input placeholder=""
+                                                  data-test="width" type="number" id="E3zLcKBbIz"
+                                                  class="form-control" value=""><span
+                                                  class="input-group-text">CM</span></div>
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-xxl-3">
+                                      <div class=""><label class="d-flex text-truncate form-label">
+                                              <div class="d-flex">Altura <span class="text-danger ms-1">*</span>
+                                              </div>
+                                          </label>
+                                          <div class="flex-nowrap input-group"><input placeholder=""
+                                                  data-test="height" type="number" id="BcBM8ZMHFv"
+                                                  class="form-control" value=""><span
+                                                  class="input-group-text">CM</span></div>
+                                      </div>
+                                  </div>
+                                  <div class="col-6 col-xxl-3">
+                                      <div class=""><label class="d-flex text-truncate form-label">
+                                              <div class="d-flex">Peso <span class="text-danger ms-1">*</span>
+                                              </div>
+                                          </label>
+                                          <div class="flex-nowrap input-group"><input placeholder=""
+                                                  data-test="weight" type="number" id="xaEgI6XUwr"
+                                                  class="form-control" value="">
+                                              <div class="dropdown-group-form"><button type="button"
+                                                      class="form-select text-start text-truncate"
+                                                      style="text-overflow: ellipsis;">KG</button>
+                                                  <div x-placement="bottom-start" class="w-100 dropdown-menu"
+                                                      aria-labelledby="" data-popper-reference-hidden="false"
+                                                      data-popper-escaped="false"
+                                                      data-popper-placement="bottom-start"
+                                                      style="inset: 0px auto auto 0px; transform: translate3d(1420px, 503.2px, 0px);">
+                                                      <div></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="w-100 font-16 mt-3 text-center">Peso volumétrico: <strong>0
+                                      Kg</strong><i class="fas fa-info-circle ms-2"></i></div>
+                              <div class="d-flex justify-content-center"><a rel="noopener noreferrer"
+                                      class="text-decoration-none mb-2" target="_blank"
+                                      href="https://envia.com/es-MX/terminos-y-condiciones-especificos">Prohibiciones
+                                      y restricciones de envío</a></div>
+                          </form>
+                      </div>
+                  </div>
+                  <div class="row d-none">
+                      <div class="col"><button minheight="0" color=""
+                              class="pointer mt-0 border-0 rounded-3 my-3 mb-2  py-1 px-1 list-group-item list-group-item-action"
+                              style="min-height: 0px;">
+                              <div color="" class="sc-dlfnuX hXRmAz">
+                                  <div class="row">
+                                      <div class="d-flex flex-column col-auto"></div>
+                                      <div class="w-50 col">
+                                          <div class="align-items-start text-truncate row">
+                                              <div class="mb-1 ps-0 col-sm-12 col-12">
+                                                  <div class="d-flex"><span class="font-12 h6 false mb-1">
+                                                          &nbsp;</span></div>
+                                                  <p class="font-12 text-muted h6 mb-1">undefined X undefined X
+                                                      undefined undefined</p>
+                                                  <p class="font-12 h6 false mb-0"> undefined undefined </p><span
+                                                      class="text-muted h6 mb-0"></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </button></div>
+                  </div>
+                  <div class="mb-3"><label class="form-label">Servicios adicionales</label>
+                      <div class="no-shadow card">
+                          <div class="list-group">
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="insurance" type="checkbox"
+                                                          id="insurance" class="form-check-input"></div><span
+                                                      class="text-muted">Seguro</span>
+                                              </div>
+                                          </div>
+                                          <div class="col" style="display: none;">
+                                              <div class="input-group" style="flex-wrap: nowrap;"><input
+                                                      autocomplete="off" min="0" name="amount"
+                                                      formik="[object Object]" placeholder="" type="number"
+                                                      class="form-control is-invalid" value=""
+                                                      style="background-image: none; padding-right: 0.5em;"><span
+                                                      class="input-group-text">MXN</span></div>
+                                              <div class="d-block invalid-feedback">Campo requerido</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="international_broker_select"
+                                                          type="checkbox" id="international_broker_select"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">FedEx International Broker Select®<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="priority_alert" type="checkbox"
+                                                          id="priority_alert" class="form-check-input"></div><span
+                                                      class="text-muted">FedEx Priority Alert®<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="ship_alert" type="checkbox"
+                                                          id="ship_alert" class="form-check-input"></div><span
+                                                      class="text-muted">FedEx ShipAlert®</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="third_party_consigne"
+                                                          type="checkbox" id="third_party_consigne"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">FedEx® Third Party Consignee</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="saturday_pickup" type="checkbox"
+                                                          id="saturday_pickup" class="form-check-input"></div>
+                                                  <span class="text-muted">Saturday Pickup</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="future_day_shipping"
+                                                          type="checkbox" id="future_day_shipping"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">Future Day Shipping</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="electronic_trade_document"
+                                                          type="checkbox" id="electronic_trade_document"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">Documento Comercial Electrónico</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="international_controlled_export"
+                                                          type="checkbox" id="international_controlled_export"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">Exportación Internacional Controlada<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="cash_on_delivery" type="checkbox"
+                                                          id="cash_on_delivery" class="form-check-input"></div>
+                                                  <span class="text-muted">Pago contra Entrega<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                          <div class="col" style="display: none;">
+                                              <div class="input-group" style="flex-wrap: nowrap;"><input
+                                                      autocomplete="off" min="0" name="amount"
+                                                      formik="[object Object]" placeholder="" type="number"
+                                                      class="form-control is-invalid" value=""
+                                                      style="background-image: none; padding-right: 0.5em;"><span
+                                                      class="input-group-text">MXN</span></div>
+                                              <div class="d-block invalid-feedback">Campo requerido</div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item"><span class="ps-2 fw-bold text-muted">Firma
+                                      Electrónica</span>
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="adult_signature_required"
+                                                          type="checkbox" id="adult_signature_required"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">Adult Signature Required<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="no_signature_required"
+                                                          type="checkbox" id="no_signature_required"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">No Signature Required<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="indirect_signature_required"
+                                                          type="checkbox" id="indirect_signature_required"
+                                                          class="form-check-input"></div><span
+                                                      class="text-muted">Indirect Signature Required<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="direct_signature" type="checkbox"
+                                                          id="direct_signature" class="form-check-input"></div>
+                                                  <span class="text-muted">Direct Signature Required<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item">
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="hold_at_location" type="checkbox"
+                                                          id="hold_at_location" class="form-check-input"></div>
+                                                  <span class="text-muted">Retener en Ubicación (HAL)<i
+                                                          class="fas fa-info-circle ms-1 text-primary"></i></span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="p-0 list-group-item"><span
+                                      class="ps-2 fw-bold text-muted">Peligroso</span>
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="dangerous_good" type="checkbox"
+                                                          id="dangerous_good" class="form-check-input"></div><span
+                                                      class="text-muted">Dangerous Goods - Inaccessible</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="sc-hKgJUU iVXgmM py-1 px-2 pointer">
+                                      <div class="d-flex align-items-center row">
+                                          <div class="col">
+                                              <div class="d-flex">
+                                                  <div class="me-2"><input name="dangerous_good" type="checkbox"
+                                                          id="dangerous_good" class="form-check-input"></div><span
+                                                      class="text-muted">Dangerous Goods - Accessible</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div role="alert" class="fade alert alert-info show" style="z-index: 0;"><span>Nuestro equipo de
+                          soporte está aquí para ayudarte por chat o correo electrónico:</span> <a
+                          href="mailto:support@envia.com" class="alert-link">support@envia.com</a></div>
+                  <div class="d-flex justify-content-end"><button type="button" class="btn btn-light">Minimizar
+                      </button><button type="submit" class="ms-3 btn btn-primary">Guardar </button></div>
+              </div>
+          </div>
+          <div name="end"></div><a>
+              <div class="mt-3 pointer card">
+                  <div class="px-3 py-2 w-100 d-flex justify-content-center card-body"><span variant="link"
+                          class="fw-bold text-decoration-none text-primary">+ Agregar paquete</span></div>
+              </div>
+          </a>
+          <div class="mt-3 p-3 border border-success box-quote-sticky card">
+              <div class="g-3 flex-nowrap align-items-end row">
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                      <div><label class="form-label">Etiqueta Rápida</label>
+                          <div id="" data-name="" class="dropdown"><button type="button"
+                                  class="form-select text-start text-truncate"
+                                  style="text-overflow: ellipsis;">Seleccione una opción</button>
+                              <div x-placement="bottom-start" class="w-100 dropdown-menu" aria-labelledby=""
+                                  data-popper-reference-hidden="false" data-popper-escaped="false"
+                                  data-popper-placement="bottom-start"
+                                  style="inset: 0px auto auto 0px; transform: translate3d(1121.6px, 267.2px, 0px);">
+                                  <div></div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div
+                      class="d-flex align-items-end justify-content-center col-xl-1 col-lg-1 col-md-1 col-sm-1 col-1">
+                      <span class="mb-2">o</span></div>
+                  <div class="col-xl-5 col-lg-5 col-md-5 col-sm-5 col-5">
+                      <div class="w-100"><label class="form-label">Todos los transportistas</label><button
+                              type="button" data-test="generate"
+                              class="w-100 align-self-end text-truncate btn btn-success">Cotizar </button></div>
+                  </div>
+              </div>
+          </div>
+          <div></div>
+      </div>
+  </div>
+</div>
+<%- include('footer.ejs'); %>
