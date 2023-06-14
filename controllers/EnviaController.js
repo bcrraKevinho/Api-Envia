@@ -27,6 +27,28 @@ module.exports = {
         });
     },
 
+    search: (req, res) => {      
+        res.render('search', { page_name: "search", color: "primary"
+        });
+    },
+
+    showSearch: (req, res) => {
+        var request = require('request');
+        var options = {
+        'method': 'GET',
+        'url': 'http://queries-test.envia.com/guide/' + req.query.trackingNumber,
+        'headers': {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+          }
+        };
+        request(options, function (error, response) {
+            if (error) throw new Error(error);
+            res.render('showSearch', { envio: JSON.parse(response.body).data, page_name: "search", color: "primary" });
+        });
+
+    },
+
     create: (req, res) => {
                 
         if(req.method == 'GET'){
@@ -132,8 +154,8 @@ module.exports = {
                 request(options, function (error, response) {
                     if (error) throw new Error(error);
                     res.render('create', 
-                    {page_name: "create", color: "success", 
-                    req: req.body, res: JSON.parse(response.body).data, 
+                    {page_id: "1", page_name: "create", color: "success", 
+                    req: req.body, label: JSON.parse(response.body).data, 
                     disabled: "disabled", modal_title: "Guía generada con éxito",
                     modal: "<script>$(window).on('load', function() {$('#exampleModal').modal('show');});</script>"});
                   });

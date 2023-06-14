@@ -1,0 +1,39 @@
+<%- include('helper.ejs'); %>
+<%- include('header.ejs'); %>
+<div class="row"> 
+  <div class="col-md-3"></div>
+  <div class="col-md-6 mb-4">
+    <h4 class="my-0">Tu número de envio: <%- envio[0].tracking_number %></h4>
+    <h4 class="my-0"> <a class="btn btn-primary" target="_blank" href="<%- envio[0].label_file %>" >Guía generada:</a></h4>
+  </div>
+  <div class="col-md-3">
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3 mb-4"></div>
+  <div class="col-md-6 mb-4">
+    <ul class="list-group mb-3 ">
+      <li class="list-group-item active d-flex justify-content-between lh-condensed ">
+        <div>
+          <h5 class="my-0">Información del envío</h5>
+        </div>
+      </li>
+      <% envio.forEach(result => { %>
+        <%  Object.keys(result).forEach(key => { %>
+          <% if(result[key] && typeof result[key] !== 'object') {%>
+      <li class="list-group-item d-flex justify-content-between lh-condensed">
+        <div>
+          <h6 class="my-0"><%= result[key] %></h6>
+          <small class="text-muted">
+              <%-key%>
+            </small>
+        </div>
+      </li>
+      <% }})}) %>
+
+    </ul>
+  </div>
+  <div class="col-md-3 mb-4"></div>
+</div>
+<%- include('footer.ejs'); %>

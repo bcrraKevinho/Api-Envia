@@ -2,44 +2,46 @@
 //Variables
 
 //Llena el formulario con el objeto req
-req = {
-  nombreOrigen: 'Kevin',
-  empresaOrigen: 'SoltekOnline',
-  emailOrigen: '',
-  telefonoOrigen: '6461234554',
-  paisOrigen: 'MX',
-  calleOrigen: 'Lázaro Cárdenas',
-  numeroOrigen: '',
-  cpOrigen: '22800',
-  coloniaOrigen: 'Zona Centro',
-  ciudadOrigen: 'Ensenada',
-  estadoOrigen: 'BC',
-  rfcOrigen: '',
-  referenciaOrigen: '',
-  nombreDestino: 'Luis',
-  empresaDestino: '',
-  emailDestino: '',
-  telefonoDestino: '6462255448',
-  paisDestino: 'MX',
-  calleDestino: 'zapata',
-  numeroDestino: '145',
-  cpDestino: '80220',
-  coloniaDestino: 'Guadalupe',
-  ciudadDestino: 'PTE',
-  estadoDestino: 'SI',
-  rfcDestino: '',
-  referenciaDestino: '',
-  tipo: 'box',
-  contenido: 'camisetas rojas',
-  valor: '0',
-  cantidad: '1',
-  largo: '5',
-  ancho: '5',
-  alto: '5',
-  peso: '5',
-  seguro: '',
-  firma: '',
-  peligroso: ''
+if(typeof req === 'undefined'){
+    req = {
+      nombreOrigen: 'Kevin',
+      empresaOrigen: 'SoltekOnline',
+      emailOrigen: '',
+      telefonoOrigen: '6461234554',
+      paisOrigen: 'MX',
+      calleOrigen: 'Lázaro Cárdenas',
+      numeroOrigen: '',
+      cpOrigen: '22800',
+      coloniaOrigen: 'Zona Centro',
+      ciudadOrigen: 'Ensenada',
+      estadoOrigen: 'BC',
+      rfcOrigen: '',
+      referenciaOrigen: '',
+      nombreDestino: 'Luis',
+      empresaDestino: '',
+      emailDestino: '',
+      telefonoDestino: '6462255448',
+      paisDestino: 'MX',
+      calleDestino: 'zapata',
+      numeroDestino: '145',
+      cpDestino: '80220',
+      coloniaDestino: 'Guadalupe',
+      ciudadDestino: 'PTE',
+      estadoDestino: 'SI',
+      rfcDestino: '',
+      referenciaDestino: '',
+      tipo: 'box',
+      contenido: 'camisetas rojas',
+      valor: '0',
+      cantidad: '1',
+      largo: '5',
+      ancho: '5',
+      alto: '5',
+      peso: '5',
+      seguro: '',
+      firma: '',
+      peligroso: ''
+    }
 }
 
 //Functions
@@ -65,15 +67,6 @@ printObject = function(obj){
 }
 
 createButton = function(carrier, service){
-    /*
-    return '<form action="create" method="post">\
-                <input type="hidden" name="carrier" value="'+ carrier +'"/>\
-                <input type="hidden" name="service" value="'+ service +'"/>\
-                <button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="createLabel">\
-                    Generar\
-                </button>\
-            </form>';
-    */
     return '<button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="'+carrier+','+service+'">\
                 Generar\
             </button>';

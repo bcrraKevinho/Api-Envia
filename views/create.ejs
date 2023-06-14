@@ -2,9 +2,11 @@
 <%- include('header.ejs'); %>
 <%- modal %> 
   <form action="create" method="post" >
-    <div class="row">
+    <div class="row <%if(typeof label === 'undefined'){%>invisible<%}%>">
       <div class="col-md-12">
-        <button class="btn btn-<%- color %> btn-lg btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit">Información de envio</button>
+        <button class="btn btn-<%- color %> btn-lg btn-block" 
+          data-bs-toggle="modal" data-bs-target="#exampleModal" 
+          type="submit">Información de envio</button>
       </div>
     </div>
     <div class="row">
@@ -304,8 +306,8 @@
               <div class="row">
                 <div class="col-md-12 mb-4">
                   <ul class="list-group mb-3">
-                    <% if(typeof res !== 'undefined') {%>
-                    <%- printObject(res) %>
+                    <% if(typeof label !== 'undefined') {%>
+                    <%- printObject(label) %>
                     <% } else if(typeof quotes !== 'undefined') {%>
                     <%- printQuotes(quotes) %>
                     <% } %>
