@@ -3,6 +3,11 @@
 <%- modal %> 
   <form action="create" method="post" >
     <div class="row">
+      <div class="col-md-12">
+        <button class="btn btn-<%- color %> btn-lg btn-block" data-bs-toggle="modal" data-bs-target="#exampleModal" type="submit">Información de envio</button>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-4">
         <div class="card">
           <div class="card-header bg-<%- color %> text-white text-center">
@@ -193,19 +198,19 @@
           <div class="card-body">
               <div class="row">
                 <div class="col-md-3 mb-3">
-                  <input type="radio" class="btn-check" name="tipo" id="btnSobre" autocomplete="off" value="envelope" <%- checked("envelope") %> required>
+                  <input type="radio" class="btn-check" name="tipo" id="btnSobre" autocomplete="off" value="envelope" <%- checked("envelope") %> <%- disabled %> required>
                   <label class="btn btn-outline-primary" for="btnSobre">Sobre</label>
                 </div>
                 <div class="col-md-3 mb-3">
-                  <input type="radio" class="btn-check" name="tipo" id="btnCaja" autocomplete="off" value="box" <%- checked("box") %> required >
+                  <input type="radio" class="btn-check" name="tipo" id="btnCaja" autocomplete="off" value="box" <%- checked("box") %> <%- disabled %> required >
                   <label class="btn btn-outline-primary" for="btnCaja">caja</label>
                 </div>
                 <div class="col-md-3 mb-3">
-                  <input type="radio" class="btn-check" name="tipo" id="btnTarima" autocomplete="off" value="pallet" <%- checked("pallet") %> required>
+                  <input type="radio" class="btn-check" name="tipo" id="btnTarima" autocomplete="off" value="pallet" <%- checked("pallet") %> <%- disabled %> required>
                   <label class="btn btn-outline-primary" for="btnTarima">tarima</label>
                 </div>
                 <div class="col-md-3 mb-3">
-                  <input type="radio" class="btn-check" name="tipo" id="btnCamion" autocomplete="off" value="full_truck_load" <%- checked("full_truck_load") %> required>
+                  <input type="radio" class="btn-check" name="tipo" id="btnCamion" autocomplete="off" value="full_truck_load" <%- checked("full_truck_load") %> <%- disabled %> required>
                   <label class="btn btn-outline-primary" for="btnCamion">camión</label>
                 </div>
               </div>
@@ -287,33 +292,32 @@
         <button class="btn btn-<%- color %> btn-lg btn-block" <%- disabled %> type="submit">Cotizar</button>
       </div>
     </div>
-  </form>
-
-
-  <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-primary text-white">
-        <h5 class="modal-title" id="exampleModalLabel">Cotizaciones para tu envío</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12 mb-4">
-            <ul class="list-group mb-3">
-              <% if(typeof res !== 'undefined') {%>
-              <%- printQuote(res) %>
-              <% } %>
-
-            </ul>
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title" id="exampleModalLabel"><%- modal_title %></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12 mb-4">
+                  <ul class="list-group mb-3">
+                    <% if(typeof res !== 'undefined') {%>
+                    <%- printObject(res) %>
+                    <% } else if(typeof quotes !== 'undefined') {%>
+                    <%- printQuotes(quotes) %>
+                    <% } %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+  </form>
   <%- include('footer.ejs'); %>
