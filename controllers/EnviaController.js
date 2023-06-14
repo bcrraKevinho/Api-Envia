@@ -225,9 +225,9 @@ module.exports = {
                                             totalPrice: json2.data[j].totalPrice
                                         });
                                 }
-                                resolve(quotes[0]);
+                                resolve(quotes);
                             }
-                            resolve({carrier: "No disponible", service: "No disponible", deliveryEstimate: "No disponible", totalPrice: "No disponible"});
+                            resolve([{carrier: "No disponible", service: "No disponible", deliveryEstimate: "No disponible", totalPrice: "No disponible"}]);
                         }
                         );
                 });}
@@ -258,6 +258,7 @@ module.exports = {
                 req: req.body, res: quotes, 
                 modal: "<script>$(window).on('load', function() {$('#exampleModal').modal('show');});</script>"});
               });
+            
         }
     },
 
