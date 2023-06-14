@@ -6,6 +6,11 @@ module.exports = {
         res.render('tracking', { page_name: "tracking", color: "primary"
         });
     },
+    
+    shipping: (req, res) => {      
+        res.render('shipping', { page_name: "shipping", color: "primary"
+        });
+    },
 
     showTracking: (req, res) => {
         var axios = require('axios');
