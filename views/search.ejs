@@ -8,8 +8,10 @@
       <div class="row">
         <div class="col-md-6 mb-3">
           <input type="text" class="form-control" id="trackingNumber" name="trackingNumber" placeholder="Ingresa el número de rastreo" required>
-          <div class="invalid-feedback">
-            Valid first name is required.
+          <div class="text-danger">
+            <% if(exists(error)){ %>
+               <%- error %>
+                 <% } %>
           </div>
         </div>
       </div>   

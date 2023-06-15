@@ -2,8 +2,32 @@ const { name } = require('ejs');
 
 module.exports = {
     
-    tracking: (req, res) => {      
-        res.render('tracking', { page_name: "tracking", color: "primary"
+    tracking: (req, res) => {     
+        error = "";
+        if(typeof req.query.error !== "undefined")
+            error = "No se encontró el envío"; 
+        res.render('tracking', { page_name: "tracking", color: "primary", error: error
+        });
+    },
+
+    showTracking: (req, res) => {
+        var axios = require('axios');
+        var data = '{\n\t"trackingNumbers":[\n\t"'+ req.query.trackingNumber +'"\n\t]\n}';
+        var config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://api-test.envia.com/ship/generaltrack/',
+        headers: { },
+        data : data
+        };
+
+        axios(config)
+        .then(function (response) {
+            if(response.data.data.length) res.render('showTracking', { envio: response.data.data, page_name: "tracking", color: "primary" });
+            else res.redirect('/?error=1');
+        })
+        .catch(function (error) {
+        console.log(error);
         });
     },
     
@@ -24,28 +48,11 @@ module.exports = {
         });
     },
 
-    showTracking: (req, res) => {
-        var axios = require('axios');
-        var data = '{\n\t"trackingNumbers":[\n\t"'+ req.query.trackingNumber +'"\n\t]\n}';
-        var config = {
-        method: 'post',
-        maxBodyLength: Infinity,
-        url: 'https://api-test.envia.com/ship/generaltrack/',
-        headers: { },
-        data : data
-        };
-
-        axios(config)
-        .then(function (response) {
-        res.render('showTracking', { envio: response.data.data, page_name: "tracking", color: "primary" });
-        })
-        .catch(function (error) {
-        console.log(error);
-        });
-    },
-
     search: (req, res) => {      
-        res.render('search', { page_name: "search", color: "primary"
+        error = "";
+        if(typeof req.query.error !== "undefined")
+            error = "No se encontró el envío"; 
+        res.render('search', { page_name: "search", color: "primary", error: error
         });
     },
 
@@ -61,7 +68,11 @@ module.exports = {
         };
         request(options, function (error, response) {
             if (error) throw new Error(error);
-            res.render('showSearch', { envio: JSON.parse(response.body).data, page_name: "search", color: "primary" });
+            envio = JSON.parse(response.body).data
+            if(envio.length)
+                res.render('showSearch', { envio: JSON.parse(response.body).data, page_name: "search", color: "primary" });
+            else
+                res.redirect('/search?error=1');
         });
 
     },
