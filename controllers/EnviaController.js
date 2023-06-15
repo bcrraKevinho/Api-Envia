@@ -7,8 +7,20 @@ module.exports = {
         });
     },
     
-    shipping: (req, res) => {      
-        res.render('shipping', { page_name: "shipping", color: "primary"
+    shippings: (req, res) => {     
+        var request = require('request');
+        var options = {
+        'method': 'GET',
+        'url': 'https://queries-test.envia.com/guide/06/2023',
+        'headers': {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+        }
+        };
+        request(options, function (error, response) {
+        if (error) throw new Error(error);
+            res.render('shippings', { page_name: "shippings", color: "primary", shippings: JSON.parse(response.body).data
+            });
         });
     },
 

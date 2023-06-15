@@ -112,6 +112,46 @@ printQuotes = function(obj){
     return List;
 }
 
+createRow = function(obj,i){
+    return '<tr>\
+        <th scope="row">'+(i+1)+'</th>\
+            <td>\
+                '+obj.name+' '+obj.service+' <br>\
+                <a href="showTracking?trackingNumber='+obj.tracking_number+'">'+obj.tracking_number+'</a>\
+            </td>\
+        <td>'+obj.status+'</td>\
+        <td>\
+            '+obj.consignee_name+' '+obj.consignee_street+', <br>\
+            '+obj.consignee_number+'\
+        </td>\
+        <td>\
+            '+obj.shipment_weight+' KG\
+        </td>\
+        <td>\
+            Sin servicios <br>\
+            adicionales\
+        </td>\
+        <td>$'+obj.grand_total+' MXN</td>\
+        <td>\
+            '+obj.sender_name+' <br>\
+            '+obj.created_at+'\
+        </td>\
+        <td>\
+            <h4 class="my-0"> <a class="btn btn-primary" target="_blank" href="'+obj.label_file+'" >Guia generada</a></h4>\
+        </td>\
+    </tr>'
+}
+
+printShippings = function(obj){
+    var table = '';
+    if(typeof obj === 'undefined') return table;
+    
+    for (let i = 0; i < obj.length; i++) {
+        table += createRow(obj[i], i);
+    }    
+    return table;
+}
+
 printValue = function(field){
     if(typeof req === 'undefined') return "";
     if(field in req) return req[field];

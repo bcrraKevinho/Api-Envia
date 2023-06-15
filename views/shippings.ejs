@@ -1,0 +1,42 @@
+<%- include('helper.ejs'); %>
+<%- include('header.ejs'); %>
+
+<link href="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.css" rel="stylesheet">
+<script src="https://unpkg.com/bootstrap-table@1.21.4/dist/bootstrap-table.min.js"></script>
+
+<div class="row"> 
+    <div class="col-md-3"></div>
+    <div class="col-md-6 mb-4">
+      <h4 class="my-0"> </h4>
+    </div>
+    <div class="col-md-3">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12 mb-4">   
+      <table
+          id="table"
+          data-toggle="table"
+          data-pagination="true"
+          data-show-columns="true">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Seguimiento</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Destino</th>
+            <th scope="col">Paquete</th>
+            <th scope="col">Servicios adicionales</th>
+            <th scope="col">Guia</th>
+            <th scope="col">Usuario</th>
+            <th scope="col">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%- printShippings(shippings); %>
+        </tbody>
+      </table> 
+    </div>
+  </div>
+<%- include('footer.ejs'); %>

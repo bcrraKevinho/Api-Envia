@@ -3,7 +3,7 @@ const router = express.Router();
 const EnviaCtrl = require("../controllers/EnviaController");
 
 router.get('/', EnviaCtrl.tracking);
-router.get('/shipping', EnviaCtrl.shipping);
+router.get('/shippings', EnviaCtrl.shippings);
 router.get('/showTracking', EnviaCtrl.showTracking);
 router.get('/search', EnviaCtrl.search);
 router.get('/showSearch', EnviaCtrl.showSearch);
