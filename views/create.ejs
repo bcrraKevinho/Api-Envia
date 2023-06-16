@@ -44,7 +44,8 @@
               <div class="col-md-12 mb-3">
                 <label for="paisOrigen">Pais<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="paisOrigen" name="paisOrigen" placeholder="" 
-                value="<%- printValue("paisOrigen")%>" <%- disabled %> required>
+                value="México" disabled required>
+                <input type="hidden" name="paisCodOrigen" id="paisCodOrigen" value = "MX">
               </div>
             </div>
             <div class="row">
@@ -67,22 +68,26 @@
                 <input type="text" class="form-control" id="cpOrigen" name="cpOrigen" placeholder="" 
                 value="<%- printValue("cpOrigen")%>" <%- disabled %> required>
               </div>
-              <div class="col-md-6 mb-3">
+              <div class="col-md-6 mb-3 ">
                 <label for="coloniaOrigen">Colonia</label>
-                <input type="text" class="form-control" id="coloniaOrigen" name="coloniaOrigen" placeholder="" 
-                value="<%- printValue("coloniaOrigen")%>" <%- disabled %> >
+                <select class="form-select" style="overflow:auto;" id="coloniaOrigen" name="coloniaOrigen" aria-label="Default select example" <%- disabled %>>
+                  <option selected readonly="true" hidden value="<%- printValue("coloniaOrigen")%>"> <%- printValue("coloniaOrigen")%> </option>
+                </select>
+
               </div>
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="ciudadOrigen">Ciudad<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="ciudadOrigen" name="ciudadOrigen" placeholder="" 
-                value="<%- printValue("ciudadOrigen")%>" <%- disabled %> required>
+                value="<%- printValue("ciudadOrigen")%>" readonly="true" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="estadoOrigen">Estado<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="estadoOrigen" name="estadoOrigen" placeholder="" 
-                value="<%- printValue("estadoOrigen")%>" <%- disabled %> required>
+                value="<%- printValue("estadoOrigen")%>" readonly="true"  required>
+                <input type="hidden" name="estadoCodOrigen" id="estadoCodOrigen"
+                value="<%- printValue("estadoCodOrigen")%>">
               </div>
             </div>
 
@@ -135,7 +140,8 @@
                 <div class="col-md-12 mb-3">
                   <label for="paisDestino">Pais<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="paisDestino" name="paisDestino" placeholder="" 
-                  value="<%- printValue("paisDestino")%>" <%- disabled %> required>
+                  value="México" disabled required>
+                  <input type="hidden" name="paisCodDestino" id="paisCodDestino" value = "MX">
                 </div>
               </div>
               <div class="row">
@@ -160,20 +166,23 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="coloniaDestino">Colonia</label>
-                  <input type="text" class="form-control" id="coloniaDestino" name="coloniaDestino" placeholder="" 
-                  value="<%- printValue("coloniaDestino")%>" <%- disabled %> >
+                  <select class="form-select" style="overflow:auto;" id="coloniaDestino" name="coloniaDestino" aria-label="Default select example" <%- disabled %>>
+                    <option selected readonly="true" hidden value="<%- printValue("coloniaDestino")%>"> <%- printValue("coloniaDestino")%> </option>
+                  </select>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="ciudadDestino">Ciudad<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="ciudadDestino" name="ciudadDestino" placeholder="" 
-                  value="<%- printValue("ciudadDestino")%>" <%- disabled %> required>
+                  value="<%- printValue("ciudadDestino")%>" readonly="true" required>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="estadoDestino">Estado<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="estadoDestino" name="estadoDestino" placeholder="" 
-                  value="<%- printValue("estadoDestino")%>" <%- disabled %> required>
+                  value="<%- printValue("estadoDestino")%>" readonly="true" required>
+                  <input type="hidden" name="estadoCodDestino" id="estadoCodDestino"
+                  value="<%- printValue("estadoCodDestino")%>">
                 </div>
               </div>
 
@@ -295,7 +304,7 @@
         <div class="card">
           <div class="btn-group card-body">
             <div class="dropup mx-2">
-              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <button class="btn btn-secondary dropdown-toggle" <%- disabled %> type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 Cotización rápida
               </button>
               <div class="text-danger">
@@ -343,4 +352,48 @@
         </div>
       </div>
   </form>
+
+  <script>
+  $(document).ready(function(){
+    
+    function geolocation_zip(zip, type){
+        $.ajax({
+          url: "https://geocodes.envia.com/zipcode/MX/"+zip,
+          method: "GET",
+          data:{action:'fetch'},
+          dataType: "JSON",
+          success:function(data){
+            if(data){
+              $.each(data[0].suburbs, function (i, item) {
+                $('#colonia'+type).append($('<option>', { 
+                    value: item,
+                    text : item 
+                }));
+            });
+              $('#ciudad'+type).val(data[0].locality);
+              $('#estado'+type).val(data[0].state.name);
+              $('#estadoCod'+type).val(data[0].state.code["2digit"]);
+            } 
+          }
+
+        })
+      }
+    
+    $("#cpOrigen").focusout(() => {
+      $zip = $("#cpOrigen").val();
+      if($zip.length === 5) {
+          geolocation_zip($zip, "Origen");
+        }
+    });
+    
+    $("#cpDestino").focusout(() => {
+      $zip = $("#cpDestino").val();
+      if($zip.length === 5) {
+          geolocation_zip($zip, "Destino");
+        }
+    });
+    
+  });
+
+  </script>
   <%- include('footer.ejs'); %>

@@ -2,32 +2,34 @@
 //Variables
 
 //Llena el formulario con el objeto req
+
 if(typeof req === 'undefined'){
+    console.log(typeof req);
     req = {
       nombreOrigen: 'Kevin',
       empresaOrigen: 'SoltekOnline',
       emailOrigen: '',
       telefonoOrigen: '6461234554',
-      paisOrigen: 'MX',
+      paisOrigen: '',
       calleOrigen: 'Lázaro Cárdenas',
       numeroOrigen: '',
-      cpOrigen: '22800',
-      coloniaOrigen: 'Zona Centro',
-      ciudadOrigen: 'Ensenada',
-      estadoOrigen: 'BC',
+      cpOrigen: '',
+      coloniaOrigen: '',
+      ciudadOrigen: '',
+      estadoOrigen: '',
       rfcOrigen: '',
       referenciaOrigen: '',
       nombreDestino: 'Luis',
       empresaDestino: '',
       emailDestino: '',
       telefonoDestino: '6462255448',
-      paisDestino: 'MX',
-      calleDestino: 'zapata',
-      numeroDestino: '145',
-      cpDestino: '80220',
-      coloniaDestino: 'Guadalupe',
-      ciudadDestino: 'PTE',
-      estadoDestino: 'SI',
+      paisDestino: '',
+      calleDestino: 'Zapata',
+      numeroDestino: '',
+      cpDestino: '',
+      coloniaDestino: '',
+      ciudadDestino: '',
+      estadoDestino: '',
       rfcDestino: '',
       referenciaDestino: '',
       tipo: 'box',
@@ -42,7 +44,7 @@ if(typeof req === 'undefined'){
       firma: '',
       peligroso: ''
     }
-}
+} 
 
 //Functions
 printObject = function(obj){
@@ -195,9 +197,6 @@ checked = function(value){
     return "";
 }
 
-exists = function(variable){
-    return typeof variable !== undefined;
-}
 
 //Logic
 

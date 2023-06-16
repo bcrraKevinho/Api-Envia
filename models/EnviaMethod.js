@@ -15,8 +15,8 @@ module.exports = {
                     "number": req.body.numeroOrigen,
                     "district": req.body.coloniaOrigen,
                     "city": req.body.ciudadOrigen,
-                    "state": req.body.estadoOrigen,
-                    "country": req.body.paisOrigen,
+                    "state": req.body.estadoCodOrigen,
+                    "country": req.body.paisCodOrigen,
                     "postalCode": req.body.cpOrigen,
                     "reference": req.body.referenciaOrigen
                 },
@@ -29,8 +29,8 @@ module.exports = {
                     "number": req.body.numeroDestino,
                     "district": req.body.coloniaDestino,
                     "city": req.body.ciudadDestino,
-                    "state": req.body.estadoDestino,
-                    "country": req.body.paisDestino,
+                    "state": req.body.estadoCodDestino,
+                    "country": req.body.paisCodDestino,
                     "postalCode": req.body.cpDestino,
                     "reference": req.body.referenciaDestino
                 },

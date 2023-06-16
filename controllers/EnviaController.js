@@ -95,6 +95,14 @@ module.exports = {
                     if(typeof req.query.error !== "undefined")
                         error = "No se encontró el envío"; 
                     EnviaMethod.getCouriers().then((couriers) => { //Renderiza la vista con las empresas disponibles
+                        
+                        //Filtrar empresas no deseadas
+                        couriers.data = couriers.data.filter(function(item) {
+                            var couriersBlacklist = ['sendex','paquetexpress','noventa9Minutos','ivoy', 'carssa', 'quiken', 'dostavista', 'almex', 'fletesMexico', 'entrega', 'exxprezo', 'mensajerosUrbanos', 'scm', 'amPm', 'treggo', 'uruz', 'jtexpress', 'bigLogistics']
+                            
+                            return !couriersBlacklist.includes(item.name);
+                        })
+                        
                         res.render('create', {page_name: "create", color: "success", couriers: couriers.data, error: error});
                     });
             }
@@ -123,8 +131,8 @@ module.exports = {
                             "number": req.body.numeroOrigen,
                             "district": req.body.coloniaOrigen,
                             "city": req.body.ciudadOrigen,
-                            "state": req.body.estadoOrigen,
-                            "country": req.body.paisOrigen,
+                            "state": req.body.estadoCodOrigen,
+                            "country": req.body.paisCodOrigen,
                             "postalCode": req.body.cpOrigen,
                             "reference": req.body.referenciaOrigen
                         },
@@ -137,8 +145,8 @@ module.exports = {
                             "number": req.body.numeroDestino,
                             "district": req.body.coloniaDestino,
                             "city": req.body.ciudadDestino,
-                            "state": req.body.estadoDestino,
-                            "country": req.body.paisDestino,
+                            "state": req.body.estadoCodDestino,
+                            "country": req.body.paisCodDestino,
                             "postalCode": req.body.cpDestino,
                             "reference": req.body.referenciaDestino
                         },
@@ -174,6 +182,7 @@ module.exports = {
                 
                 request(options, function (error, response) {
                     if (error) throw new Error(error);
+                    console.log(req.body);
                     res.render('create', 
                     {page_id: "1", page_name: "create", color: "success", 
                     req: req.body, label: JSON.parse(response.body).data, 
@@ -182,7 +191,7 @@ module.exports = {
                   });
                 return;
             }
-            //Cotizar
+            //Cotizar guía
             else if (typeof req.body.btnCotizar !== "undefined") {
                 if(req.body.btnCotizar == "todos"){
 
@@ -197,11 +206,16 @@ module.exports = {
                 }
                 else{
                     EnviaMethod.getQuote(req).then((quote) => { //Renderiza la vista con las cotizaciones
+                        console.log(req.body);
+                        
                         if(quote[0].carrier === "No disponible")
-                            res.redirect('/create?error=1');
-                        else
                             res.render('create', 
                             {page_name: "create", color: "success", 
+                            req: req.body, quote: '', modal_title: '',
+                            modal: '', error: "No se encontró cotización"});
+                        else
+                            res.render('create', 
+                            {page_name: "create", color: "success",
                             req: req.body, quote: quote, modal_title: "Cotizaciones para tu envío",
                             modal: "<script>$(window).on('load', function() {$('#exampleModal').modal('show');});</script>"});
                     });
