@@ -112,6 +112,28 @@ printQuotes = function(obj){
     return List;
 }
 
+printQuote = function(obj){
+    var List = '';
+    if(typeof obj === 'undefined') return List;
+    //HTML elements
+    var headStart = '<br><li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white"><div><h6 class="my-0">Cotización ';
+    var headEnd = '</h6></div></li>';     
+    var k = 1;
+    for(var i=0;i<obj.length;i++){
+        Object.keys(obj[i]).forEach(key => {
+            if(obj[i][key]) {
+                if(obj[i][key] !== 'No disponible'){
+                    if(key === 'carrier') List += createHeader(k++);
+                        List += createList(obj[i][key], key);
+                    if(key === 'totalPrice')
+                        List += createButton(obj[i]['carrier'], obj[i]['service']);
+                }
+            }
+        }) 
+    }
+    return List;
+}
+
 createRow = function(obj,i){
     return '<tr>\
         <th scope="row">'+(i+1)+'</th>\
@@ -152,6 +174,15 @@ printShippings = function(obj){
     return table;
 }
 
+printCouriers = function(obj){
+    couriers = "";
+    if(typeof obj !== undefined)
+        for (let i = 0; i < obj.length; i++)
+            couriers += '<button class="dropdown-item" type="submit" value="'+obj[i].name+'" name="btnCotizar" id="btnCotizar">'+obj[i].description+'</a>'
+    return couriers;
+
+}
+
 printValue = function(field){
     if(typeof req === 'undefined') return "";
     if(field in req) return req[field];
@@ -178,5 +209,11 @@ if(typeof modal === 'undefined') {
 }
 if(typeof modal_title === 'undefined') {
     modal_title = "";
+}
+if(typeof couriers === 'undefined') {
+    couriers = "";
+}
+if(typeof error === 'undefined') {
+    error = "";
 }
 %>

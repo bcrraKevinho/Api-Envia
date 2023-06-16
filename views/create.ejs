@@ -1,6 +1,7 @@
 <%- include('header.ejs'); %>
 <%- modal %> 
   <form action="create" method="post" >
+    <input type="hidden" name="couriers" id="couriers" value='<%-JSON.stringify(couriers)%>'>
     <div class="row <%if(typeof label === 'undefined'){%>invisible<%}%>">
       <div class="col-md-12">
         <button class="btn btn-<%- color %> btn-lg btn-block" 
@@ -287,10 +288,29 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 text-end">
-        <hr class="mb-4">
-        <button class="btn btn-<%- color %> btn-lg btn-block" <%- disabled %> type="submit">Cotizar</button>
+    <hr class="mb-4">
+    <div class="row fixed-bottom">
+      <div class="col-md-8"></div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="btn-group card-body">
+            <div class="dropup mx-2">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Cotización rápida
+              </button>
+              <div class="text-danger">
+                <% if(typeof error !== undefined){ %>
+                   <%- error %>
+                     <% } %>
+              </div>
+              <div class="dropdown-menu" style="overflow:auto; height: 300px;">
+                <%- printCouriers(couriers) %>
+              </div>
+            </div>
+            O
+            <button class="btn btn-<%- color %>  btn-block mx-2" <%- disabled %> type="submit" name="btnCotizar" id="btnCotizar" value="todos">Cotizar todos los transportistas</button>
+          </div>
+        </div>
       </div>
     </div>
       <!-- Modal -->
@@ -309,7 +329,9 @@
                     <%- printObject(label) %>
                     <% } else if(typeof quotes !== 'undefined') {%>
                     <%- printQuotes(quotes) %>
-                    <% } %>
+                    <% } else if(typeof quote !== 'undefined') {%>
+                    <%- printQuote(quote) %>
+                    <%} %>
                   </ul>
                 </div>
               </div>
