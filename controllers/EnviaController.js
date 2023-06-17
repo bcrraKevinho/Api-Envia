@@ -38,7 +38,7 @@ module.exports = {
         'url': 'https://queries-test.envia.com/guide/06/2023',
         'headers': {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+            'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
         }
         };
         request(options, function (error, response) {
@@ -63,7 +63,7 @@ module.exports = {
         'url': 'http://queries-test.envia.com/guide/' + req.query.trackingNumber,
         'headers': {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+            'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
           }
         };
         request(options, function (error, response) {
@@ -119,7 +119,7 @@ module.exports = {
                     'url': 'https://api-test.envia.com/ship/generate/',
                     'headers': {
                       'Content-Type': 'application/json',
-                      'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+                      'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
                     },
                     body: JSON.stringify({
                         "origin": {

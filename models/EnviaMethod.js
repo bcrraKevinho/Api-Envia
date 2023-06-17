@@ -68,7 +68,7 @@ module.exports = {
                 'url': 'https://api-test.envia.com/ship/rate/',
                 'headers': {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+                    'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
                 },
                 body: JSON.stringify(bodyJson)    
             };
@@ -100,7 +100,7 @@ module.exports = {
             'method': 'GET',
             'url': 'https://queries-test.envia.com/available-service/MX/0/1',
             'headers': {
-                'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+                'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
             }
             };
             request(options, async function (error, response) {
@@ -115,7 +115,7 @@ module.exports = {
             'method': 'GET',
             'url': 'https://queries-test.envia.com/available-carrier/MX/0',
             'headers': {
-                'Authorization': 'Bearer 51b7a0483cecd5ab66d9dffdf3c62d4d90128ec6b91a6087328f100ca71bc514'
+                'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
             }
             };
             request(options, async function (error, response) {
