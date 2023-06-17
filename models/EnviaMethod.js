@@ -3,8 +3,8 @@ module.exports = {
     getQuote: async (req) => {
 
         return new Promise((resolve, reject) => {
-            var carrier = req.body.btnCotizar;
-            
+
+            var carrier = req.body.btnCourier;
             var bodyJson = {
                 "origin": {
                     "name": req.body.nombreOrigen,
@@ -72,14 +72,10 @@ module.exports = {
                 },
                 body: JSON.stringify(bodyJson)    
             };
-
             request(options, function (error, response) {
-                var quotes = [];
                 if (error) throw new Error(error);
-                    json2 = JSON.parse(response.body);
-
-                    console.log(json2);
-
+                var quotes = [];
+                json2 = JSON.parse(response.body);
                     if(json2.meta === "rate" && typeof json2.data === "object"){
                         for(var j = 0; j < json2.data.length; j++)
                         {
@@ -128,12 +124,13 @@ module.exports = {
             });  
         })
     }, 
-    getQuotes: async (carriers, req) => {
+    getQuotes: async (req) => {
+        carriers = JSON.parse(req.body.couriers);
         return new Promise( async (resolve, reject) => {
             var quotes = [];
             //req.body.btnGenerar
             for(var i = 0; i < carriers.length; i++){
-                req.body.btnCotizar = carriers[i].name;
+                req.body.btnCourier = carriers[i].name;
                 quotes.push(await module.exports.getQuote(req));
             }
             resolve(quotes);  

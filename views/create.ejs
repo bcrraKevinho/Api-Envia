@@ -1,7 +1,6 @@
 <%- include('header.ejs'); %>
 <%- modal %> 
-  <form action="create" method="post" >
-    <input type="hidden" name="couriers" id="couriers" value='<%-JSON.stringify(couriers)%>'>
+  <form  method="post" id="formEnvia" name="formEnvia" >
     <div class="row <%if(typeof label === 'undefined'){%>invisible<%}%>">
       <div class="col-md-12">
         <button class="btn btn-<%- color %> btn-lg btn-block" 
@@ -312,12 +311,11 @@
                    <%- error %>
                      <% } %>
               </div>
-              <div class="dropdown-menu" style="overflow:auto; height: 300px;">
-                <%- printCouriers(couriers) %>
+              <div class="dropdown-menu" style="overflow:auto; height: 300px;" name="dropdownCouriers" id="dropdownCouriers">
               </div>
             </div>
             O
-            <button class="btn btn-<%- color %>  btn-block mx-2" <%- disabled %> type="submit" name="btnCotizar" id="btnCotizar" value="todos">Cotizar todos los transportistas</button>
+            <button class="btn btn-<%- color %>  btn-block mx-2" <%- disabled %> type="submit" name="btnCotizarTodos" id="btnCotizarTodos" value="todos">Cotizar todos los transportistas</button>
           </div>
         </div>
       </div>
@@ -331,31 +329,103 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+              <div class="text-center">
+                <div class="spinner-border text-primary" name="modalLoad" id="modalLoad" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
               <div class="row">
                 <div class="col-md-12 mb-4">
-                  <ul class="list-group mb-3">
+                  <ul class="list-group mb-3" name="modalList" id="modalList">
                     <% if(typeof label !== 'undefined') {%>
-                    <%- printObject(label) %>
-                    <% } else if(typeof quotes !== 'undefined') {%>
-                    <%- printQuotes(quotes) %>
-                    <% } else if(typeof quote !== 'undefined') {%>
-                    <%- printQuote(quote) %>
-                    <%} %>
+                      <%- printObject(label) %>
+                    <% } %>
                   </ul>
                 </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
       </div>
+      <button type="submit" class="invisible" id="btnSubmit" name="btnSubmit"></button>
+      <input type="hidden" name="btnCourier" id="btnCourier">
+      <input type="hidden" name="couriers" id="couriers" >
   </form>
 
   <script>
-  $(document).ready(function(){
+    //events
+
+    $(document).ready(function(){
+      printCouriers();
+    });
+
+    $("#cpOrigen").focusout(() => {
+      $zip = $("#cpOrigen").val();
+      if($zip.length === 5) {
+          geolocation_zip($zip, "Origen");
+        }
+    });
     
+    $("#cpDestino").focusout(() => {
+      $zip = $("#cpDestino").val();
+      if($zip.length === 5) {
+          geolocation_zip($zip, "Destino");
+        }
+    });
+
+    $("#btnCotizarTodos").click((event) => {     
+      var form = $("#formEnvia");
+      if(!form.valid()) return;
+      $('#exampleModal').modal('show');
+      $('#modalList').html('');
+      $('#modalLoad').show();
+
+      var unindexed_array = form.serializeArray();
+      var formData = {};
+      $.map(unindexed_array, function(n, i){
+          formData[n['name']] = n['value'];
+      });
+
+      $.ajax({
+          type: "POST",
+          url: '/quotes',
+          data: formData, // serializes the form's elements.
+          success: (quotes) => {
+            console.log(quotes);
+            $('#modalLoad').hide();
+            $("#modalList").html(printQuotes(quotes));
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+          }
+      }); 
+
+      event.preventDefault()
+    });
+
+    //functions
+    function printCouriers(){
+      $.ajax({
+          type: "GET",
+          url: '/couriers',
+          success: (couriers) => {
+            html = "";
+            $("#couriers").val(JSON.stringify(couriers));            
+            for (let i = 0; i < couriers.length; i++)
+              html += '<button class="dropdown-item cotizar" onclick="quote(this.value)" type="button" value="'+couriers[i].name+'">'+couriers[i].description+'</a>'            
+            $("#dropdownCouriers").html(html);
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+          }
+      });
+    }
+
     function geolocation_zip(zip, type){
         $.ajax({
           url: "https://geocodes.envia.com/zipcode/MX/"+zip,
@@ -370,7 +440,7 @@
                     text : item 
                 }));
             });
-              $('#ciudad'+type).val(data[0].locality);
+              $('#ciudad'+type).val(data[0].regions.region_2);
               $('#estado'+type).val(data[0].state.name);
               $('#estadoCod'+type).val(data[0].state.code["2digit"]);
             } 
@@ -378,22 +448,108 @@
 
         })
       }
-    
-    $("#cpOrigen").focusout(() => {
-      $zip = $("#cpOrigen").val();
-      if($zip.length === 5) {
-          geolocation_zip($zip, "Origen");
-        }
-    });
-    
-    $("#cpDestino").focusout(() => {
-      $zip = $("#cpDestino").val();
-      if($zip.length === 5) {
-          geolocation_zip($zip, "Destino");
-        }
-    });
-    
-  });
 
-  </script>
+    function quote(courier){       
+      var form = $("#formEnvia");
+      if(!form.valid()) return;
+      $('#btnCourier').val(courier);
+      
+      $('#exampleModal').modal('show');
+      $('#modalList').html('');
+      $('#modalLoad').show();
+
+      var unindexed_array = form.serializeArray();
+      var formData = {};
+      $.map(unindexed_array, function(n, i){
+          formData[n['name']] = n['value'];
+      });
+
+      $.ajax({
+          type: "POST",
+          url: '/quote',
+          data: formData, // serializes the form's elements.
+          success: (quote) => {
+            $('#modalLoad').hide();
+            if(quote[0].carrier === "No disponible"){
+              $('#modalList').html('<li class="list-group-item d-flex justify-content-between lh-condensed"><h6>\
+                                      No se encontraron cotizaciones para esta paquetería\
+                                    </h6></li>');
+            }
+            else{
+              $('#modalList').html(printQuote(quote));
+            }
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+          }
+      });
+      event.preventDefault();
+    }
+
+    function printQuotes(obj){
+      var List = '';
+      if(typeof obj === 'undefined') return List;
+      var k = 1;
+      for(var i=0;i<obj.length;i++){
+          for(var j=0;j<obj[i].length;j++){
+              Object.keys(obj[i][j]).forEach(key => {
+                  if(obj[i][j][key]) {
+                      if(obj[i][j][key] !== 'No disponible'){
+                          if(key === 'carrier') List += createHeader(k++);
+                              List += createList(obj[i][j][key], key);
+                          if(key === 'totalPrice')
+                              List += createButton(obj[i][j]['carrier'], obj[i][j]['service']);
+                      }
+                  }
+              }) 
+          }
+      }
+      return List;
+    }
+          
+    function createButton(carrier, service){
+      return '<button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="'+carrier+','+service+'">\
+                  Generar\
+              </button>';
+    }
+
+    function createList(content, key){
+        return '<li class="list-group-item d-flex justify-content-between lh-condensed">\
+                    <div>\
+                        <h6 class="my-0">'+ content +'</h6>\
+                        <small class="text-muted">'+ key + '</small>\
+                    </div>\
+                </li>';
+    }
+
+    function createHeader(count){
+        return '<br><li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white">\
+                        <div><h6 class="my-0">Cotización '+ count +'</h6></div>\
+                    </li>';
+    }
+
+    function printQuote(obj){
+        var List = '';
+        if(typeof obj === 'undefined') return List;
+        //HTML elements
+        var k = 1;
+        for(var i=0;i<obj.length;i++){
+            Object.keys(obj[i]).forEach(key => {
+                if(obj[i][key]) {
+                    if(obj[i][key] !== 'No disponible'){
+                        if(key === 'carrier') List += createHeader(k++);
+                            List += createList(obj[i][key], key);
+                        if(key === 'totalPrice')
+                            List += createButton(obj[i]['carrier'], obj[i]['service']);
+                    }
+                }
+            }) 
+        }
+        return List;
+    }
+  </script>  	
+  	
+  <script language="javascript" type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/localization/messages_es.js"></script>
   <%- include('footer.ejs'); %>

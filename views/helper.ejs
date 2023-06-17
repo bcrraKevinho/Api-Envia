@@ -4,7 +4,6 @@
 //Llena el formulario con el objeto req
 
 if(typeof req === 'undefined'){
-    console.log(typeof req);
     req = {
       nombreOrigen: 'Kevin',
       empresaOrigen: 'SoltekOnline',
@@ -180,7 +179,7 @@ printCouriers = function(obj){
     couriers = "";
     if(typeof obj !== undefined)
         for (let i = 0; i < obj.length; i++)
-            couriers += '<button class="dropdown-item" type="submit" value="'+obj[i].name+'" name="btnCotizar" id="btnCotizar">'+obj[i].description+'</a>'
+            couriers += '<button class="dropdown-item cotizar" type="button" value="'+obj[i].name+'" name="btnCotizar" id="btnCotizar">'+obj[i].description+'</a>'
     return couriers;
 
 }
@@ -207,7 +206,7 @@ if(typeof modal === 'undefined') {
     modal = "";
 }
 if(typeof modal_title === 'undefined') {
-    modal_title = "";
+    modal_title = "Cotizaciones para tu envío";
 }
 if(typeof couriers === 'undefined') {
     couriers = "";

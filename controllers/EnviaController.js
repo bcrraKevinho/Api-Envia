@@ -105,9 +105,9 @@ module.exports = {
                         
                         res.render('create', {page_name: "create", color: "success", couriers: couriers.data, error: error});
                     });
-            }
+                }
         }
-        if(req.method == 'POST'){       
+        if(req.method == 'POST'){      
             //Generar guía
             couriers = JSON.parse(req.body.couriers);
             if(typeof req.body.btnGenerar !== "undefined"){ 
@@ -182,46 +182,42 @@ module.exports = {
                 
                 request(options, function (error, response) {
                     if (error) throw new Error(error);
-                    console.log(req.body);
                     res.render('create', 
                     {page_id: "1", page_name: "create", color: "success", 
                     req: req.body, label: JSON.parse(response.body).data, 
                     disabled: "disabled", modal_title: "Guía generada con éxito",
-                    modal: "<script>$(window).on('load', function() {$('#exampleModal').modal('show');});</script>"});
+                    modal: "<script>$(window).on('load', function() {  $('#exampleModal').modal('show'); $('#modalLoad').hide();   });</script>"});
                   });
                 return;
             }
-            //Cotizar guía
-            else if (typeof req.body.btnCotizar !== "undefined") {
-                if(req.body.btnCotizar == "todos"){
-
-                    EnviaMethod.getQuotes(couriers,req).then((quotes) => { //Renderiza la vista con las cotizaciones
-                        
-                        console.log(quotes);
-                        res.render('create', 
-                        {page_name: "create", color: "success", 
-                        req: req.body, couriers: couriers, quotes: quotes, modal_title: "Cotizaciones para tu envío",
-                        modal: "<script>$(window).on('load', function() {$('#exampleModal').modal('show');});</script>"});
-                    });
-                }
-                else{
-                    EnviaMethod.getQuote(req).then((quote) => { //Renderiza la vista con las cotizaciones
-                        console.log(req.body);
-                        
-                        if(quote[0].carrier === "No disponible")
-                            res.render('create', 
-                            {page_name: "create", color: "success", 
-                            req: req.body, quote: '', modal_title: '',
-                            modal: '', error: "No se encontró cotización"});
-                        else
-                            res.render('create', 
-                            {page_name: "create", color: "success",
-                            req: req.body, quote: quote, modal_title: "Cotizaciones para tu envío",
-                            modal: "<script>$(window).on('load', function() {$('#exampleModal').modal('show');});</script>"});
-                    });
-                }
-            }
         }
+    },
+
+    couriers: (req, res) => {
+        const EnviaMethod = require("../models/EnviaMethod");
+        EnviaMethod.getCouriers().then((couriers) => { //Renderiza la vista con las empresas disponibles
+            //Filtrar empresas no deseadas
+            couriers.data = couriers.data.filter(function(item) {
+                var couriersBlacklist = ['sendex','paquetexpress','noventa9Minutos','ivoy', 'carssa', 'quiken', 'dostavista', 'almex', 'fletesMexico', 'entrega', 'exxprezo', 'mensajerosUrbanos', 'scm', 'amPm', 'treggo', 'uruz', 'jtexpress', 'bigLogistics']
+                
+                return !couriersBlacklist.includes(item.name);
+            });
+            res.json(couriers.data);
+        });
+    },
+
+    quote: (req, res) => {
+        const EnviaMethod = require("../models/EnviaMethod");
+        EnviaMethod.getQuote(req).then((quote) => { //Renderiza la vista con las cotizaciones
+            res.json(quote)
+        });
+    },
+
+    quotes: (req, res) => {
+        const EnviaMethod = require("../models/EnviaMethod");
+        EnviaMethod.getQuotes(req).then((quotes) => { //Renderiza la vista con las cotizaciones
+            res.json(quotes);
+        });
     },
 
     update: (req, res) => {
