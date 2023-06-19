@@ -208,7 +208,7 @@
           <div class="card-body">
               <div class="row">
                 <div class="col-md-3 mb-3">
-                  <input type="radio" class="btn-check" name="tipo" id="btnSobre" autocomplete="off" value="envelope" <%- checked("envelope") %> <%- disabled %> required>
+                  <input type="radio" class="btn-check " name="tipo" id="btnSobre" autocomplete="off" value="envelope" <%- checked("envelope") %> <%- disabled %> required>
                   <label class="btn btn-outline-primary" for="btnSobre">Sobre</label>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -230,7 +230,6 @@
                   <input type="text" class="form-control" id="contenido" name="contenido" placeholder=""
                   value="<%- printValue("contenido")%>" <%- disabled %> required>
                 </div>
-                
               </div>
               <div class="row">
                 <div class="col-md-12 mb-3">
@@ -524,34 +523,7 @@
       });
       event.preventDefault();
     }
-
-    function printQuotes(obj){
-      var List = '';
-      if(typeof obj === 'undefined') return List;
-      var k = 1;
-      for(var i=0;i<obj.length;i++){
-          for(var j=0;j<obj[i].length;j++){
-              Object.keys(obj[i][j]).forEach(key => {
-                  if(obj[i][j][key]) {
-                      if(obj[i][j][key] !== 'No disponible'){
-                          if(key === 'carrier') List += createHeader(k++);
-                              List += createList(obj[i][j][key], key);
-                          if(key === 'totalPrice')
-                              List += createButton(obj[i][j]['carrier'], obj[i][j]['service']);
-                      }
-                  }
-              }) 
-          }
-      }
-      return List;
-    }
           
-    function createButton(carrier, service){
-      return '<button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="'+carrier+','+service+'">\
-                  Generar\
-              </button><br>';
-    }
-
     function createList(content, key){
         return '<li class="list-group-item d-flex justify-content-between lh-condensed">\
                     <div>\
@@ -563,8 +535,23 @@
 
     function createHeader(carrier){
         return '<li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white">\
-                        <div><h6 class="my-0">Paquetería: '+ carrier +'</h6></div>\
-                    </li>';
+                  <div><h6 class="my-0">Paquetería: '+ carrier +'</h6></div>\
+                </li>\
+                <li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white">\
+                  <table><tbody><tr>';
+    }
+
+    function createRow(content, key){
+        return '<td>\
+                  <h6 class="my-0">'+ content +'</h6>\
+                  <small class="text-muted">'+ key + '</small>\
+                </td>';
+    }
+
+    function createButton(carrier, service){
+      return '<button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="'+carrier+','+service+'">\
+                  Generar\
+              </button></tr></tbody></table></li><br>';
     }
 
     function printQuote(obj){
@@ -576,8 +563,11 @@
             Object.keys(obj[i]).forEach(key => {
                 if(obj[i][key]) {
                     if(obj[i][key] !== 'No disponible'){
-                        if(key === 'carrier') List += createHeader(obj[i][key]);
-                            List += createList(obj[i][key], key);
+                        if(key === 'carrier') {
+                          List += createHeader(obj[i][key]);
+                          return; 
+                        }
+                          List += createRow(obj[i][key], key);
                         if(key === 'totalPrice')
                             List += createButton(obj[i]['carrier'], obj[i]['service']);
                     }
