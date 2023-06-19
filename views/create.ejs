@@ -235,8 +235,11 @@
               <div class="row">
                 <div class="col-md-12 mb-3">
                   <label for="valor">Valor declarado</label>
-                  <input type="text" class="form-control" id="valor" name="valor" placeholder="" 
-                  value="<%- printValue("valor")%>" <%- disabled %> >
+                  <div class="input-group mb-3">
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" id="valor" name="valor" placeholder="" 
+                    value="<%- printValue("valor")%>" <%- disabled %> >
+                  </div>
                 </div>
               </div>
               <div class="row">
@@ -249,33 +252,46 @@
               <div class="row">
                 <div class="col-md-12 mb-3">
                   <label for="largo">Largo<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="largo" name="largo" placeholder="" 
-                  value="<%- printValue("largo")%>" <%- disabled %> required>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="largo" name="largo" placeholder="" 
+                    value="<%- printValue("largo")%>" <%- disabled %> required>
+                    <span class="input-group-text">CM</span>
+                  </div>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="ancho">Ancho<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="ancho" name="ancho" placeholder="" 
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="ancho" name="ancho" placeholder="" 
                   value="<%- printValue("ancho")%>" <%- disabled %> required>
+                    <span class="input-group-text">CM</span>
+                  </div>
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="altura">Altura<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="alto" name="alto" placeholder="" 
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="alto" name="alto" placeholder="" 
                   value="<%- printValue("alto")%>" <%- disabled %> required>
+                    <span class="input-group-text">CM</span>
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="peso">Peso<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="peso" name="peso" placeholder="" 
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="peso" name="peso" placeholder="" 
                   value="<%- printValue("peso")%>" <%- disabled %> required>
+                    <span class="input-group-text">KG</span>
+                  </div>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-md-4 mb-3">
+                  <br>
                   <label for="servicios">Seguro</label>
                   <input type="text" class="form-control" id="seguro" name="seguro" placeholder="" 
                   value="<%- printValue("seguro")%>" <%- disabled %> >
@@ -326,17 +342,15 @@
           <div class="modal-content">
             <div class="modal-header bg-primary text-white">
               <h5 class="modal-title" id="exampleModalLabel"><%- modal_title %></h5>
+                <div class="spinner-border spinner-border-sm text-light ms-3" name="modalLoad" id="modalLoad" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="text-center">
-                <div class="spinner-border text-primary" name="modalLoad" id="modalLoad" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-              </div>
               <div class="row">
-                <div class="col-md-12 mb-4">
-                  <ul class="list-group mb-3" name="modalList" id="modalList">
+                <div class="col-md-12">
+                  <ul class="list-group" name="modalList" id="modalList">
                     <% if(typeof label !== 'undefined') {%>
                       <%- printObject(label) %>
                     <% } %>
@@ -362,6 +376,10 @@
       printCouriers();
     });
 
+    $(document).ajaxStop(function() {
+      $('#modalLoad').hide();
+    });
+
     $("#cpOrigen").focusout(() => {
       $zip = $("#cpOrigen").val();
       if($zip.length === 5) {
@@ -375,7 +393,7 @@
           geolocation_zip($zip, "Destino");
         }
     });
-
+/*
     $("#btnCotizarTodos").click((event) => {     
       var form = $("#formEnvia");
       if(!form.valid()) return;
@@ -388,7 +406,6 @@
       $.map(unindexed_array, function(n, i){
           formData[n['name']] = n['value'];
       });
-
       $.ajax({
           type: "POST",
           url: '/quotes',
@@ -404,6 +421,25 @@
           }
       }); 
 
+      event.preventDefault()
+    });
+*/
+    $("#btnCotizarTodos").click((event) => {     
+      var form = $("#formEnvia");
+      if(!form.valid()) return;
+      $('#exampleModal').modal('show');
+      $('#modalList').html('');
+      $('#modalLoad').show();
+
+      var unindexed_array = form.serializeArray();
+      var formData = {};
+      $.map(unindexed_array, function(n, i){
+          formData[n['name']] = n['value'];
+      });
+      var carriers = JSON.parse($("#couriers").val());
+      for(var i = 0; i < carriers.length; i++){
+          quote(carriers[i].name, false);
+      }
       event.preventDefault()
     });
 
@@ -449,15 +485,18 @@
         })
       }
 
-    function quote(courier){       
+    function quote(courier, single = true){       
       var form = $("#formEnvia");
       if(!form.valid()) return;
       $('#btnCourier').val(courier);
-      
-      $('#exampleModal').modal('show');
-      $('#modalList').html('');
-      $('#modalLoad').show();
-
+      if(single){
+        $('#exampleModal').modal('show');
+        $('#modalList').html('');
+        $('#modalLoad').show();
+      }
+      else{
+        console.log("Cotizando "+ courier);
+      }
       var unindexed_array = form.serializeArray();
       var formData = {};
       $.map(unindexed_array, function(n, i){
@@ -469,14 +508,13 @@
           url: '/quote',
           data: formData, // serializes the form's elements.
           success: (quote) => {
-            $('#modalLoad').hide();
-            if(quote[0].carrier === "No disponible"){
-              $('#modalList').html('<li class="list-group-item d-flex justify-content-between lh-condensed"><h6>\
-                                      No se encontraron cotizaciones para esta paquetería\
+            if(quote[0].carrier === "No disponible" && single){
+              $('#modalList').append('<li class="list-group-item d-flex justify-content-between lh-condensed"><h6>\
+                                      No se encontraron cotizaciones para '+ courier +'\
                                     </h6></li>');
             }
             else{
-              $('#modalList').html(printQuote(quote));
+              $('#modalList').append(printQuote(quote));
             }
           },
           error: function (xhr, ajaxOptions, thrownError) {
@@ -511,7 +549,7 @@
     function createButton(carrier, service){
       return '<button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="'+carrier+','+service+'">\
                   Generar\
-              </button>';
+              </button><br>';
     }
 
     function createList(content, key){
@@ -523,9 +561,9 @@
                 </li>';
     }
 
-    function createHeader(count){
-        return '<br><li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white">\
-                        <div><h6 class="my-0">Cotización '+ count +'</h6></div>\
+    function createHeader(carrier){
+        return '<li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white">\
+                        <div><h6 class="my-0">Paquetería: '+ carrier +'</h6></div>\
                     </li>';
     }
 
@@ -538,7 +576,7 @@
             Object.keys(obj[i]).forEach(key => {
                 if(obj[i][key]) {
                     if(obj[i][key] !== 'No disponible'){
-                        if(key === 'carrier') List += createHeader(k++);
+                        if(key === 'carrier') List += createHeader(obj[i][key]);
                             List += createList(obj[i][key], key);
                         if(key === 'totalPrice')
                             List += createButton(obj[i]['carrier'], obj[i]['service']);
