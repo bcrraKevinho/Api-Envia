@@ -235,7 +235,7 @@
               <div class="row">
                 <div class="col-md-12 mb-3">
                   <label for="valor">Valor declarado</label>
-                  <div class="input-group mb-3">
+                  <div class="input-group">
                     <span class="input-group-text">$</span>
                     <input type="text" class="form-control" id="valor" name="valor" placeholder="" 
                     value="<%- printValue("valor")%>" <%- disabled %> >
@@ -252,7 +252,7 @@
               <div class="row">
                 <div class="col-md-12 mb-3">
                   <label for="largo">Largo<span class="text-danger">*</span></label>
-                  <div class="input-group mb-3">
+                  <div class="input-group">
                     <input type="text" class="form-control" id="largo" name="largo" placeholder="" 
                     value="<%- printValue("largo")%>" <%- disabled %> required>
                     <span class="input-group-text">CM</span>
@@ -263,7 +263,7 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="ancho">Ancho<span class="text-danger">*</span></label>
-                  <div class="input-group mb-3">
+                  <div class="input-group">
                     <input type="text" class="form-control" id="ancho" name="ancho" placeholder="" 
                   value="<%- printValue("ancho")%>" <%- disabled %> required>
                     <span class="input-group-text">CM</span>
@@ -271,7 +271,7 @@
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="altura">Altura<span class="text-danger">*</span></label>
-                  <div class="input-group mb-3">
+                  <div class="input-group">
                     <input type="text" class="form-control" id="alto" name="alto" placeholder="" 
                   value="<%- printValue("alto")%>" <%- disabled %> required>
                     <span class="input-group-text">CM</span>
@@ -281,20 +281,21 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="peso">Peso<span class="text-danger">*</span></label>
-                  <div class="input-group mb-3">
+                  <div class="input-group">
                     <input type="text" class="form-control" id="peso" name="peso" placeholder="" 
                   value="<%- printValue("peso")%>" <%- disabled %> required>
                     <span class="input-group-text">KG</span>
                   </div>
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-md-4 mb-3">
-                  <label for="servicios">Seguro</label>
-                  <input type="text" class="form-control" id="seguro" name="seguro" placeholder="" 
-                  value="<%- printValue("seguro")%>" <%- disabled %> >
-
+                  <label for="servicios"><br>Seguro</label>
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="text" class="form-control" id="seguro" name="seguro" placeholder="" 
+                    value="<%- printValue("seguro")%>" <%- disabled %> >
+                  </div>
                 </div>
                 <div class="col-md-4 mb-3">
                   <label for="firma">Firma electrónica</label>
