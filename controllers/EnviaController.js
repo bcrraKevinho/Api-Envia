@@ -42,9 +42,10 @@ module.exports = {
         }
         };
         request(options, function (error, response) {
-        if (error) throw new Error(error);
-            res.render('shippings', { page_name: "shippings", color: "primary", shippings: JSON.parse(response.body).data
-            });
+        if (error) 
+            res.redirect('/');
+        else 
+            res.render('shippings', { page_name: "shippings", color: "primary", shippings: JSON.parse(response.body).data});
         });
     },
 
@@ -90,21 +91,8 @@ module.exports = {
                     res.render('create', {page_name: "remove", color: "danger", req: req.body, 
                     disabled: "disabled",});
                     break;
-                default:
-                    error = "";
-                    if(typeof req.query.error !== "undefined")
-                        error = "No se encontró el envío"; 
-                    EnviaMethod.getCouriers().then((couriers) => { //Renderiza la vista con las empresas disponibles
-                        
-                        //Filtrar empresas no deseadas
-                        couriers.data = couriers.data.filter(function(item) {
-                            var couriersBlacklist = ['sendex','paquetexpress','noventa9Minutos','ivoy', 'carssa', 'quiken', 'dostavista', 'almex', 'fletesMexico', 'entrega', 'exxprezo', 'mensajerosUrbanos', 'scm', 'amPm', 'treggo', 'uruz', 'jtexpress', 'bigLogistics']
-                            
-                            return !couriersBlacklist.includes(item.name);
-                        })
-                        
-                        res.render('create', {page_name: "create", color: "success", couriers: couriers.data, error: error});
-                    });
+                default: 
+                    res.render('create', {page_name: "create", color: "success"});
                 }
         }
         if(req.method == 'POST'){      
@@ -203,6 +191,9 @@ module.exports = {
                 return !couriersBlacklist.includes(item.name);
             });
             res.json(couriers.data);
+        }).catch((err) => {
+            console.log("Error CONTROLLER: " + err);
+            res.redirect('/');
         });
     },
 

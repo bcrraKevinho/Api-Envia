@@ -119,8 +119,11 @@ module.exports = {
             }
             };
             request(options, async function (error, response) {
-                if (error) throw new Error(error);    
-                resolve(JSON.parse(response.body));
+                if (error) {
+                    console.log(error);
+                    reject(error);
+                }    
+                else resolve(JSON.parse(response.body));
             });  
         })
     }, 

@@ -72,7 +72,6 @@
                 <select class="form-select" style="overflow:auto;" id="coloniaOrigen" name="coloniaOrigen" aria-label="Default select example" <%- disabled %>>
                   <option selected readonly="true" hidden value="<%- printValue("coloniaOrigen")%>"> <%- printValue("coloniaOrigen")%> </option>
                 </select>
-
               </div>
             </div>
             <div class="row">
@@ -339,7 +338,7 @@
       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
+            <div class="modal-header bg-primary text-white mb">
               <h5 class="modal-title" id="exampleModalLabel"><%- modal_title %></h5>
                 <div class="spinner-border spinner-border-sm text-light ms-3" name="modalLoad" id="modalLoad" role="status">
                   <span class="visually-hidden">Loading...</span>
@@ -392,37 +391,6 @@
           geolocation_zip($zip, "Destino");
         }
     });
-/*
-    $("#btnCotizarTodos").click((event) => {     
-      var form = $("#formEnvia");
-      if(!form.valid()) return;
-      $('#exampleModal').modal('show');
-      $('#modalList').html('');
-      $('#modalLoad').show();
-
-      var unindexed_array = form.serializeArray();
-      var formData = {};
-      $.map(unindexed_array, function(n, i){
-          formData[n['name']] = n['value'];
-      });
-      $.ajax({
-          type: "POST",
-          url: '/quotes',
-          data: formData, // serializes the form's elements.
-          success: (quotes) => {
-            console.log(quotes);
-            $('#modalLoad').hide();
-            $("#modalList").html(printQuotes(quotes));
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
-          }
-      }); 
-
-      event.preventDefault()
-    });
-*/
     $("#btnCotizarTodos").click((event) => {     
       var form = $("#formEnvia");
       if(!form.valid()) return;
@@ -454,9 +422,9 @@
               html += '<button class="dropdown-item cotizar" onclick="quote(this.value)" type="button" value="'+couriers[i].name+'">'+couriers[i].description+'</a>'            
             $("#dropdownCouriers").html(html);
           },
-          error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
+          error: (err) => {
+            console.log("Error EJS: " + err);
+            location.href = "/";
           }
       });
     }
@@ -515,64 +483,52 @@
             else{
               $('#modalList').append(printQuote(quote));
             }
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            alert(xhr.status);
-            alert(thrownError);
           }
       });
       event.preventDefault();
     }
-          
-    function createList(content, key){
-        return '<li class="list-group-item d-flex justify-content-between lh-condensed">\
-                    <div>\
-                        <h6 class="my-0">'+ content +'</h6>\
-                        <small class="text-muted">'+ key + '</small>\
-                    </div>\
+        
+    function createHeader(carrier){
+        return '<br><li class="list-group-item list-group-item-secondary">\
+                  <div ><h6 class="my-0 fw-bold">Paquetería: '+ carrier +'</h6></div>\
                 </li>';
     }
 
-    function createHeader(carrier){
-        return '<li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white">\
-                  <div><h6 class="my-0">Paquetería: '+ carrier +'</h6></div>\
-                </li>\
-                <li class="list-group-item d-flex justify-content-between lh-condensed bg-secondary text-white">\
-                  <table><tbody><tr>';
-    }
-
     function createRow(content, key){
-        return '<td>\
-                  <h6 class="my-0">'+ content +'</h6>\
-                  <small class="text-muted">'+ key + '</small>\
-                </td>';
+      sign = '';	
+      if(key === 'totalPrice') sign = '$';
+      return '<td style="vertical-align: middle; width:25%">\
+                <h6 class="my-0">'+ sign + content +'</h6>\
+              </td>';
     }
 
     function createButton(carrier, service){
-      return '<button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="'+carrier+','+service+'">\
+      return '<td><button type="submit" class="btn btn-primary" name="btnGenerar" id="btnGenerar" value ="'+carrier+','+service+'">\
                   Generar\
-              </button></tr></tbody></table></li><br>';
+              </button></td></tr></tbody></table></li>';
     }
 
     function printQuote(obj){
         var List = '';
         if(typeof obj === 'undefined') return List;
         //HTML elements
-        var k = 1;
         for(var i=0;i<obj.length;i++){
             Object.keys(obj[i]).forEach(key => {
                 if(obj[i][key]) {
                     if(obj[i][key] !== 'No disponible'){
                         if(key === 'carrier') {
-                          List += createHeader(obj[i][key]);
+                          if(i === 0)
+                            List += createHeader(obj[i][key]);
+                          List += '<li class="list-group-item"><table class="table text-center table-borderless" style="width: 100%"><tbody><tr>';
                           return; 
                         }
-                          List += createRow(obj[i][key], key);
-                        if(key === 'totalPrice')
-                            List += createButton(obj[i]['carrier'], obj[i]['service']);
+                        List += createRow(obj[i][key], key);
+                        if(key === 'totalPrice'){
+                          List += createButton(obj[i]['carrier'], obj[i]['service']);
+                        }
                     }
                 }
-            }) 
+            })
         }
         return List;
     }

@@ -136,33 +136,46 @@ printQuote = function(obj){
 }
 
 createRow = function(obj,i){
-    return '<tr>\
-        <th scope="row">'+(i+1)+'</th>\
-            <td>\
-                '+obj.name+' '+obj.service+' <br>\
-                <a href="showTracking?trackingNumber='+obj.tracking_number+'">'+obj.tracking_number+'</a>\
-            </td>\
-        <td>'+obj.status+'</td>\
-        <td>\
-            '+obj.consignee_name+' '+obj.consignee_street+', <br>\
-            '+obj.consignee_number+'\
-        </td>\
-        <td>\
-            '+obj.shipment_weight+' KG\
-        </td>\
-        <td>\
-            Sin servicios <br>\
-            adicionales\
-        </td>\
-        <td>$'+obj.grand_total+' MXN</td>\
-        <td>\
-            '+obj.sender_name+' <br>\
-            '+obj.created_at+'\
-        </td>\
-        <td>\
-            <h4 class="my-0"> <a class="btn btn-primary" target="_blank" href="'+obj.label_file+'" >Guia generada</a></h4>\
-        </td>\
-    </tr>'
+    return `<tr>
+        <th scope="row">`+(i+1)+`</th>
+            <td>
+                `+obj.name+` `+obj.service+` <br>
+                <a href="showTracking?trackingNumber=`+obj.tracking_number+`">`+obj.tracking_number+`</a>
+            </td>
+        <td>`+obj.status+`</td>
+        <td>
+            `+obj.consignee_name+` `+obj.consignee_street+`, <br>
+            `+obj.consignee_number+`
+        </td>
+        <td>
+            `+obj.shipment_weight+` KG
+        </td>
+        <td>
+            Sin servicios <br>
+            adicionales
+        </td>
+        <td>$`+obj.grand_total+` MXN</td>
+        <td>
+            `+obj.sender_name+` <br>
+            `+obj.created_at+`
+        </td>
+        <td>
+            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                <a type="button" onclick="printExternal('`+obj.label_file+`')" class="btn btn-outline-primary">Imprimir</a>
+                <div class="btn-group" role="group">
+                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        <li><a class="dropdown-item" target="_blank" href="`+obj.label_file+`">Ver guía</a></li>
+                        <li><a class="dropdown-item" target="_blank" href="`+obj.label_file+`" download>Descargar guía</a></li>
+                        <li><a class="dropdown-item" href="showTracking?trackingNumber=`+obj.tracking_number+`">Rastrear envío</a></li>
+                        <li><a class="dropdown-item" href="#">Solicitar recolección</a></li>
+                        <li><a class="dropdown-item" href="#">Cancelar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </td>
+    </tr>`;
 }
 
 printShippings = function(obj){
