@@ -35,10 +35,10 @@ module.exports = {
         var request = require('request');
         var options = {
         'method': 'GET',
-        'url': 'https://queries-test.envia.com/guide/06/2023',
+        'url': 'https://queries-test.envia.com/guide/07/2023',
         'headers': {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
+            'Authorization': 'Bearer 67874633b737c6f8fb636e019e33181fd0c46c15e169f530ae948e51295462a0'
         }
         };
         request(options, function (error, response) {
@@ -64,7 +64,7 @@ module.exports = {
         'url': 'http://queries-test.envia.com/guide/' + req.query.trackingNumber,
         'headers': {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
+            'Authorization': 'Bearer 67874633b737c6f8fb636e019e33181fd0c46c15e169f530ae948e51295462a0'
           }
         };
         request(options, function (error, response) {
@@ -107,7 +107,7 @@ module.exports = {
                     'url': 'https://api-test.envia.com/ship/generate/',
                     'headers': {
                       'Content-Type': 'application/json',
-                      'Authorization': 'Bearer 55b088b7fff6c5e024a615349924dc565834feb895a981356acdf23cf08e7daf'
+                      'Authorization': 'Bearer 67874633b737c6f8fb636e019e33181fd0c46c15e169f530ae948e51295462a0'
                     },
                     body: JSON.stringify({
                         "origin": {
@@ -170,6 +170,10 @@ module.exports = {
                 
                 request(options, function (error, response) {
                     if (error) throw new Error(error);
+                    if(response.body.meta === "error")
+                    {
+
+                    }
                     res.render('create', 
                     {page_id: "1", page_name: "create", color: "success", 
                     req: req.body, label: JSON.parse(response.body).data, 
